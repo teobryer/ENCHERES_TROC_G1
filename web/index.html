@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSON</title>
+</head>
+<body>
+<div>
+	<input type="text" id="noteText">
+	<input type="button" value="Ajouter une note"
+		   onclick="ajouterNote()">
+</div>
+
+<div>
+	<input type="button" value="Affiche les notes"
+		   onclick="afficherNotes()" />
+	<div id="notes"></div>
+</div>
+
+<div>
+	<input type="text" id="nouveauTexte">
+	<input type="number" id="idNote">
+	<input type="button" value="Modifier une note"
+		   onclick="modifierNote()">
+</div>
+
+<div>
+
+	<input type="number" id="idDelete">
+	<input type="button" value="Supprimer une note"
+		   onclick="supprimerUneNote()">
+</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		function ajouterNote() {let varRecupereDansLinput = $("#noteText").val();
+		$.ajax({
+			type: "POST",
+			data: {noteTexte : varRecupereDansLinput},
+			url: "http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			contentType: "application/x-www-form-urlencoded; charset=utf-8"});
+		}
+
+		function modifierNote() {let texte = $("#nouveauTexte").val();
+			let id = $("#idNote").val();
+			$.ajax({
+				type: "PUT",
+				data: {noteTexte : texte, idNote :id},
+				url: "http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				contentType: "application/x-www-form-urlencoded; charset=utf-8"});
+		}
+
+		function supprimerUneNote() {
+			let id = $("#idDelete").val();
+			$.ajax({
+				type: "DELETE",
+				data: {idNote :id},
+				url: "http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				contentType: "application/x-www-form-urlencoded; charset=utf-8"});
+		}
+
+		function afficherNotes() {
+			//$("#notes").remove();
+			$.getJSON("http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+					lesDonneesRecuperees => {
+						$.each(lesDonneesRecuperees, (chaqueDonnee, valeur) => {
+							$("#notes").append("<div>" + valeur["id"] + " " + valeur["texteNote"] + "</div>");
+						})
+					}
+			);
+		}
+
+	</script>
+</body>
+</html>
