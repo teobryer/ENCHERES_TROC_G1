@@ -39,7 +39,7 @@
         $.ajax({
             type: "POST",
             data: {noteTexte: varRecupereDansLinput},
-            url: "http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+            url: "http://localhost:8080/troc_encheres/apiNotes/notes",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             contentType: "application/x-www-form-urlencoded; charset=utf-8"
         });
@@ -51,7 +51,7 @@
         $.ajax({
             type: "PUT",
             data: {noteTexte: texte, idNote: id},
-            url: "http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+            url: "http://localhost:8080/troc_encheres/apiNotes/notes",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             contentType: "application/x-www-form-urlencoded; charset=utf-8"
         });
@@ -62,7 +62,7 @@
         $.ajax({
             type: "DELETE",
             data: {idNote: id},
-            url: "http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+            url: "http://localhost:8080/troc_encheres/apiNotes/notes",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             contentType: "application/x-www-form-urlencoded; charset=utf-8"
         });
@@ -70,7 +70,7 @@
 
     function afficherNotes() {
         //$("#notes").remove();
-        $.getJSON("http://localhost:8080/webservice_war_exploded/apiNotes/notes",
+        $.getJSON("http://localhost:8080/troc_encheres/apiNotes/notes",
             lesDonneesRecuperees => {
                 $.each(lesDonneesRecuperees, (chaqueDonnee, valeur) => {
                     $("#notes").append("<div>" + valeur["id"] + " " + valeur["texteNote"] + "</div>");

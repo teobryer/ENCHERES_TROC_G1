@@ -3,7 +3,7 @@
 		name="jdbc/pool_cnx"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		type="javax.sql.DataSource"
-		url="jdbc:sqlserver://localhost;databasename=NotesBDD"
+		url="jdbc:sqlserver://localhost;databasename=BDD"
 		username="sa"
 		password="jupiter"
 		maxTotal="100" 
