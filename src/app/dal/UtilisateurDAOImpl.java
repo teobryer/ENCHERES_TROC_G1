@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("DuplicatedCode")
-public class UtilisateurDAOImpl extends MaConnexion  implements DAO<Utilisateurs> {
+public class UtilisateurDAOImpl extends MaConnexion  implements DAOConnect {
 
 
     private final String SELECT_BY_ID = "USE ENCHERES SELECT * FROM Utilisateurs WHERE no_utilisateur=?";
@@ -21,7 +21,8 @@ public class UtilisateurDAOImpl extends MaConnexion  implements DAO<Utilisateurs
     private final String UPDATE = "USE ENCHERES UPDATE Utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur= ?";
     private final String INSERT = "USE ENCHERES INSERT INTO Utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String DELETE = "USE ENCHERES DELETE FROM Utilisateurs WHERE no_utilisateur= ?";
-
+    private final String CONNECT_PSEUDO =  "USE ENCHERES SELECT * FROM Utilisateurs WHERE pseudo=? and mot_de_passe=?";
+    private final String CONNECT_EMAIL =  "USE ENCHERES SELECT * FROM Utilisateurs WHERE email=? and mot_de_passe=?";
 
 
     @Override
@@ -168,5 +169,77 @@ public class UtilisateurDAOImpl extends MaConnexion  implements DAO<Utilisateurs
             throw new DALException("Problème dans la suppression d'un utilisateur");
 
         }
+    }
+
+    @Override
+    public Utilisateurs connectByPseudo(String pseudo, String password) throws DALException{
+        Utilisateurs utilisateur = null;
+        try {
+            Connection cnx = connect();
+            //
+            PreparedStatement stmt = cnx.prepareStatement(CONNECT_PSEUDO);
+            stmt.setString(1, pseudo);
+            stmt.setString(1, password);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                utilisateur = new Utilisateurs();
+                utilisateur.setNo_utilisateur(rs.getInt("no_article"));
+                utilisateur.setPseudo(rs.getString("pseudo"));
+                utilisateur.setNom(rs.getString("nom"));
+                utilisateur.setNom(rs.getString("prenom"));
+                utilisateur.setNom(rs.getString("email"));
+                utilisateur.setNom(rs.getString("telephone"));
+                utilisateur.setNom(rs.getString("rue"));
+                utilisateur.setNom(rs.getString("code_postal"));
+                utilisateur.setNom(rs.getString("ville"));
+                utilisateur.setNom(rs.getString("mot_de_passe"));
+                utilisateur.setNom(rs.getString("credit"));
+                utilisateur.setNom(rs.getString("administrateur"));
+
+
+            }
+            cnx.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DALException("Problème dans la connexion d'un utilisateur par son pseudo");
+        }
+        return utilisateur;
+    }
+
+    @Override
+    public Utilisateurs connectByEmail(String mail, String password) throws DALException{
+        Utilisateurs utilisateur = null;
+        try {
+            Connection cnx = connect();
+            //
+            PreparedStatement stmt = cnx.prepareStatement(CONNECT_EMAIL);
+            stmt.setString(1, mail);
+            stmt.setString(1, password);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                utilisateur = new Utilisateurs();
+                utilisateur.setNo_utilisateur(rs.getInt("no_article"));
+                utilisateur.setPseudo(rs.getString("pseudo"));
+                utilisateur.setNom(rs.getString("nom"));
+                utilisateur.setNom(rs.getString("prenom"));
+                utilisateur.setNom(rs.getString("email"));
+                utilisateur.setNom(rs.getString("telephone"));
+                utilisateur.setNom(rs.getString("rue"));
+                utilisateur.setNom(rs.getString("code_postal"));
+                utilisateur.setNom(rs.getString("ville"));
+                utilisateur.setNom(rs.getString("mot_de_passe"));
+                utilisateur.setNom(rs.getString("credit"));
+                utilisateur.setNom(rs.getString("administrateur"));
+
+
+            }
+            cnx.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DALException("Problème dans la connexion d'un utilisateur par son pseudo");
+        }
+        return utilisateur;
     }
 }
