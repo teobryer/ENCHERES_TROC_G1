@@ -5,7 +5,7 @@
          version="5.0">
 
     <welcome-file-list>
-        <welcome-file>home</welcome-file>
+        <welcome-file>accueil</welcome-file>
 
     </welcome-file-list>
 </web-app>
