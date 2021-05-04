@@ -1,5 +1,6 @@
 package app.bo;
 
+
 import lombok.Data;
 
 @Data

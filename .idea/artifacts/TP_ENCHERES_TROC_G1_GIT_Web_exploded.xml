@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="TP_ENCHERES_TROC_G1_GIT:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/TP_ENCHERES_TROC_G1_GIT_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="TP_ENCHERES_TROC_G1_GIT/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="TP_ENCHERES_TROC_G1_GIT" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="JAX-RS" />
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="lombok-1.18.16" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
