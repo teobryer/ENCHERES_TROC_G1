@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("DuplicatedCode")
-public class UtilisateurDAOImpl  implements DAO<Utilisateurs> {
+public class UtilisateurDAOImpl extends MaConnexion  implements DAO<Utilisateurs> {
 
 
     private final String SELECT_BY_ID = "USE ENCHERES SELECT * FROM Utilisateurs WHERE no_utilisateur=?";
@@ -23,21 +23,6 @@ public class UtilisateurDAOImpl  implements DAO<Utilisateurs> {
     private final String DELETE = "USE ENCHERES DELETE FROM Utilisateurs WHERE no_utilisateur= ?";
 
 
-    private Connection connect() {
-        try {
-            // Je vais chercher le fichier context.xml
-            Context context = new InitialContext();
-            // Je vais lire le fichier context.xml
-            DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx");
-            // J'ouvre une connection
-            Connection cnx = ds.getConnection();
-            return cnx;
-        } catch (NamingException | SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
 
     @Override
     public Utilisateurs selectById(int id) throws DALException {
