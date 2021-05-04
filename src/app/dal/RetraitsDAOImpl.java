@@ -11,28 +11,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetraitsDAOImpl implements DAO<Retraits> {
+public class RetraitsDAOImpl extends MaConnexion implements DAO<Retraits> {
     private final String SELECT_ALL = "USE ENCHERES SELECT * FROM Retraits";
     private final String SELECT_BY_ID = "USE ENCHERES SELECT * FROM Retraits WHERE no_article=?";
     //TODO: à finir
     private final String UPDATE = "USE ENCHERES UPDATE Retraits SET rue = ?, code_postal = ?, ville = ? WHERE no_articles= ?";
     private final String INSERT = "USE ENCHERES INSERT INTO Retraits (rue, code_postal, ville) VALUES (?,?,?)";
     private final String DELETE = "USE ENCHERES DELETE FROM Retraits WHERE no_article= ?";
-
-    private Connection connect() {
-        try {
-            // Je vais chercher le fichier context.xml
-            Context context = new InitialContext();
-            // Je vais lire le fichier context.xml
-            DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx");
-            // J'ouvre une connection
-            Connection cnx = ds.getConnection();
-            return cnx;
-        } catch (NamingException | SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public Retraits selectById(int id) throws DALException{
