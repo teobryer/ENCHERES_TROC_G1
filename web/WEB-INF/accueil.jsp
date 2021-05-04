@@ -9,8 +9,12 @@
 <html>
 <head>
     <title>Title</title>
+    <jsp:include page="bootstrap_fragment.jsp"></jsp:include>
 </head>
 <body>
 <h1>Test accueil</h1>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
+
+
