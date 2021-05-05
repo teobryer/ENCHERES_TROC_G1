@@ -14,6 +14,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="error_fragment.jsp"></jsp:include>
 
 
 <div class="form-group">
@@ -40,10 +41,10 @@
         let password = $("#password").val();
         $.ajax({
 
-            error: function (data) {
+            error: function (data, xhr, ajaxOptions, thrownError) {
                 console.log("login", login, "mot de passe", password);
                 console.log("data", data);
-                alert("Login ou mot de pase incorrect");
+                notifier(thrownError,"Problème d'indentificattion")
             },
 
             type: "POST",

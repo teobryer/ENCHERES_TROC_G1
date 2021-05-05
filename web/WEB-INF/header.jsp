@@ -13,8 +13,10 @@
 
     <c:if test="${sessionScope.connectedUser != null}">
         <div class="navbar-text">
-            <a class="mr-2" href="inscription">${sessionScope.connectedUser.pseudo}</a>
-            <a  href="connexion">Se déconnecter</a>
+            <a  class="mr-2"  href="accueil">Enchères</a>
+            <a  class="mr-2"  href="vendreArticle">Vendre un article</a>
+            <a class="mr-2" href="profil">${sessionScope.connectedUser.pseudo}</a>
+            <a  href="deconnexion">Déconnexion</a>
         </div>
     </c:if>
 
@@ -30,3 +32,4 @@
 
 
 </nav>
+
