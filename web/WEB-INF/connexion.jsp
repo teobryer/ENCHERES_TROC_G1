@@ -41,10 +41,10 @@
         let password = $("#password").val();
         $.ajax({
 
-            error: function (data, xhr, ajaxOptions, thrownError) {
-                console.log("login", login, "mot de passe", password);
+            error: function (data) {
                 console.log("data", data);
-                notifier(thrownError,"Problème d'indentificattion")
+
+                notifier(data.responseJSON.title,data.responseJSON.message)
             },
 
             type: "POST",

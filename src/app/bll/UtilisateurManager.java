@@ -14,7 +14,7 @@ public class UtilisateurManager implements IUtilisateurManager{
             try {
             user = DAOFact.getUtilisateursDAO().connectByPseudo(login, password);
             } catch (DALException dalException) {
-                throw new BusinessException("BLL Se connecter");
+                throw new BusinessException("Erreur de connexion","Aucune association de pseudo/mot de passe ou de email/mot de passe n'a été trouvée.");
             }
 
         }

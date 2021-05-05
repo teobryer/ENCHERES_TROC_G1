@@ -9,18 +9,35 @@ import javax.servlet.ServletException;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
 @Path("/utilisateur")
 public class GestionUtilisateur {
 
     @POST
     @Path("/connexion")
-    public Utilisateurs connexion(@FormParam("login") String login, @FormParam("password") String password) throws Exception {
+//    public Utilisateurs connexion(@FormParam("login") String login, @FormParam("password") String password) throws Exception {
+//        try {
+//            return UtilisateurManagerSingleton.getInstance().seConnecter(login, password);
+//        } catch (BusinessException e) {
+//            throw new ServletException("Connexion servlet");
+//        }
+//    }
+
+    public Response connexion(@FormParam("login") String login, @FormParam("password") String password) throws Exception {
+        Response response;
         try {
-            return UtilisateurManagerSingleton.getInstance().seConnecter(login, password);
+            Utilisateurs user =  UtilisateurManagerSingleton.getInstance().seConnecter(login, password);
+            response= Response.ok().entity(user).build();
+
         } catch (BusinessException e) {
-            throw new ServletException("Connexion servlet");
+            response=Response.status(401).entity(e).build();
+
+
+
+            return  response;
         }
+        return  response;
     }
 
     @POST

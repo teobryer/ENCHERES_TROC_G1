@@ -25,7 +25,7 @@
     </div>
 
 <script>
-function notifier(text, title){
+function notifier(title, text){
     $('#text').text(text);
     $('#title').text(title);
     $('.toast').toast('show');
