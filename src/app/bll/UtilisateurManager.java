@@ -26,7 +26,7 @@ public class UtilisateurManager implements IUtilisateurManager{
         try {
             DAOFact.getUtilisateursDAO().insert(user);
         } catch (DALException e) {
-            throw new BusinessException("BLL S'inscrire");
+            throw new BusinessException("Echec inscription", "Inscription de l'utilisateur impossible");
         }
     }
 }

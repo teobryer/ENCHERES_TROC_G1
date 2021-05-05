@@ -1,7 +1,6 @@
 package app;
 
 import app.bll.BusinessException;
-import app.bll.NoteManagerSingleton;
 import app.bll.UtilisateurManagerSingleton;
 import app.bo.Utilisateurs;
 
@@ -41,8 +40,31 @@ public class GestionUtilisateur {
     }
 
     @POST
-    @Path("/inscrire")
-    public void inscrire(@FormParam("noteTexte") String noteTexte) throws Exception {
+    @Path("/inscription")
+    public Response inscrire(@FormParam("pseudo") String pseudo, @FormParam("prenom") String prenom, @FormParam("nom") String nom,
+                         @FormParam("email") String email, @FormParam("telephone") String telephone,
+                         @FormParam("code_postal") String code_postal, @FormParam("ville") String ville,
+                         @FormParam("rue") String rue, @FormParam("mot_de_passe") String mot_de_passe) throws Exception {
+        Response response = null;
+        Utilisateurs utilisateur = new Utilisateurs();
+        utilisateur.setPseudo(pseudo);
+        utilisateur.setPrenom(prenom);
+        utilisateur.setNom(nom);
+        utilisateur.setEmail(email);
+        utilisateur.setTelephone(telephone);
+        utilisateur.setRue(rue);
+        utilisateur.setCode_postal(code_postal);
+        utilisateur.setVille(ville);
+        utilisateur.setMot_de_passe(mot_de_passe);
+        utilisateur.setCredit(100);
+        utilisateur.setAdministrateur(false);
 
+        try {
+            UtilisateurManagerSingleton.getInstance().inscrireUtilisateur(utilisateur);
+            response= Response.ok().build();
+        }catch (BusinessException e) {
+            response=Response.status(401).entity(e).build();
+        }
+        return response;
     }
 }
