@@ -3,7 +3,7 @@ package app.bll;
 public class BusinessException extends Exception {
 
 
-    private String title;
+    public String title;
 	public BusinessException(String title, String message) {
             super(message);
             this.title = title;

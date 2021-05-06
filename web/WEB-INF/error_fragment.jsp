@@ -13,7 +13,7 @@
     <div  class="toast" data-delay="5000" style="position: absolute; width: 300px; bottom: 5px; right: 10px;">
         <div class="toast-header">
             <img src="<c:url value="/img/attention.ico" />" class="rounded mr-2" alt="...">
-            <strong id="title" class="mr-auto">Bootstrap</strong>
+            <strong id="title" class="mr-auto"></strong>
 
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
