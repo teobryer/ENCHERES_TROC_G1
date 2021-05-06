@@ -1,12 +1,7 @@
 package app.dal;
 
-import app.bo.Note;
 import app.bo.Retraits;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
