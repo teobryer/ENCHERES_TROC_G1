@@ -27,4 +27,13 @@ public class UtilisateurManager implements IUtilisateurManager{
             throw new BusinessException("Echec inscription", "Inscription de l'utilisateur impossible");
         }
     }
+
+    @Override
+    public void supprimerUtilisateur(int idUser) throws BusinessException {
+        try {
+            DAOFact.getUtilisateursDAO().delete(idUser);
+        } catch (DALException e) {
+            throw new BusinessException("Echec suppression", "Impossible de supprimer cet utilisateur");
+        }
+    }
 }

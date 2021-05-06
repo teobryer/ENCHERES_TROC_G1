@@ -13,6 +13,7 @@
 
     <c:if test="${sessionScope.connectedUser != null}">
         <div class="navbar-text">
+            <button class="btn btn-info" onclick="supprimer()">Connexion</button>
             <a  class="mr-2"  href="accueil">Enchères</a>
             <a  class="mr-2"  href="vendreArticle">Vendre un article</a>
             <a class="mr-2" href="profil">${sessionScope.connectedUser.pseudo}</a>
@@ -28,8 +29,31 @@
     </c:if>
 
 
-
-
-
 </nav>
+
+
+<script>
+    function supprimer(){
+        let user ='${sessionScope.connectedUser.no_utilisateur}';
+      alert(user);
+      console.log(user);
+        $.ajax({
+            type:"DELETE",
+            url: "http://localhost:8080/troc_encheres_groupe_1/api/utilisateur/suppression/"+user,
+            success: function(){
+                notifier("Succès","Votre compte a bien été supprimé");
+                window.location = 'accueil';
+            },
+            error: function (data) {
+                console.log("data", data);
+
+                notifier(data.responseJSON.title,data.responseJSON.message)
+            }
+        });
+
+
+    }
+
+</script>
+
 

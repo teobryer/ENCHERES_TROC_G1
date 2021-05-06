@@ -4,9 +4,7 @@ import app.bll.BusinessException;
 import app.bll.ManagerFactory;
 import app.bo.Utilisateurs;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 @Path("/utilisateur")
@@ -65,5 +63,19 @@ public class GestionUtilisateur {
             response=Response.status(401).entity(e).build();
         }
         return response;
+    }
+
+    @DELETE
+    @Path("suppression/{id: \\d+}")
+    public Response supprimerUtilisateur(@PathParam("id") int idUser) throws Exception {
+        Response response;
+        try {
+            ManagerFactory.utilisateurManager().supprimerUtilisateur(idUser);
+            response = Response.ok().build();
+        } catch (BusinessException e) {
+            response=Response.status(401).entity(e).build();
+            return  response;
+        }
+        return  response;
     }
 }

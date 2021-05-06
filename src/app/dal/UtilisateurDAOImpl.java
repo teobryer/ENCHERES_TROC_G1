@@ -11,12 +11,12 @@ import java.util.List;
 public class UtilisateurDAOImpl extends MaConnexion  implements DAOConnect {
 
 
-    private final String SELECT_BY_ID = "SELECT * FROM Utilisateurs WHERE no_utilisateur=?";
-    private final String SELECT_ALL = "SELECT * FROM Utilisateurs";
-    private final String UPDATE = "UPDATE Utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur= ?";
-    private final String INSERT = "INSERT INTO Utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    private final String DELETE = "DELETE FROM Utilisateurs WHERE no_utilisateur= ?";
-    private final String CONNECT =  "SELECT * FROM Utilisateurs WHERE ( email=? or pseudo=? )and mot_de_passe=?";
+    private final String SELECT_BY_ID = "USE ENCHERES SELECT * FROM Utilisateurs WHERE no_utilisateur=?";
+    private final String SELECT_ALL = "USE ENCHERES SELECT * FROM Utilisateurs";
+    private final String UPDATE = "USE ENCHERES UPDATE Utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur= ?";
+    private final String INSERT = "USE ENCHERES INSERT INTO Utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    private final String DELETE = "USE ENCHERES DELETE FROM Utilisateurs WHERE no_utilisateur= ?";
+    private final String CONNECT =  "USE ENCHERES SELECT * FROM Utilisateurs WHERE ( email=? or pseudo=? )and mot_de_passe=?";
 
 
     @Override
