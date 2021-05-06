@@ -21,8 +21,7 @@ public class UtilisateurDAOImpl extends MaConnexion  implements DAOConnect {
     private final String UPDATE = "USE ENCHERES UPDATE Utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur= ?";
     private final String INSERT = "USE ENCHERES INSERT INTO Utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur ) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     private final String DELETE = "USE ENCHERES DELETE FROM Utilisateurs WHERE no_utilisateur= ?";
-    private final String CONNECT_PSEUDO =  "USE ENCHERES SELECT * FROM Utilisateurs WHERE pseudo=? and mot_de_passe=?";
-    private final String CONNECT_EMAIL =  "USE ENCHERES SELECT * FROM Utilisateurs WHERE email=? and mot_de_passe=?";
+    private final String CONNECT =  "USE ENCHERES SELECT * FROM Utilisateurs WHERE ( email=? or pseudo=? )and mot_de_passe=?";
 
 
     @Override
@@ -171,52 +170,18 @@ public class UtilisateurDAOImpl extends MaConnexion  implements DAOConnect {
         }
     }
 
+
+
+
     @Override
-    public Utilisateurs connectByPseudo(String pseudo, String password) throws DALException{
+    public Utilisateurs connect(String mail, String password) throws DALException{
         Utilisateurs utilisateur = null;
         try {
             Connection cnx = connect();
-            //
-            PreparedStatement stmt = cnx.prepareStatement(CONNECT_PSEUDO);
-            stmt.setString(1, pseudo);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                utilisateur = new Utilisateurs();
-                utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
-                utilisateur.setPseudo(rs.getString("pseudo"));
-                utilisateur.setNom(rs.getString("nom"));
-                utilisateur.setPrenom(rs.getString("prenom"));
-                utilisateur.setEmail(rs.getString("email"));
-                utilisateur.setTelephone(rs.getString("telephone"));
-                utilisateur.setRue(rs.getString("rue"));
-                utilisateur.setCode_postal(rs.getString("code_postal"));
-                utilisateur.setVille(rs.getString("ville"));
-                utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
-                utilisateur.setCredit(rs.getInt("credit"));
-                utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
-
-
-            }
-            if (utilisateur == null)
-                throw new DALException("Il n'y a pas d'utilisateur avec ce pseudo et et ce mot de passe.");
-            cnx.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new DALException("Problème dans la connexion d'un utilisateur par son pseudo");
-        }
-        return utilisateur;
-    }
-
-    @Override
-    public Utilisateurs connectByEmail(String mail, String password) throws DALException{
-        Utilisateurs utilisateur = null;
-        try {
-            Connection cnx = connect();
-            PreparedStatement stmt = cnx.prepareStatement(CONNECT_EMAIL);
+            PreparedStatement stmt = cnx.prepareStatement(CONNECT);
             stmt.setString(1, mail);
-            stmt.setString(2, password);
+            stmt.setString(2, mail);
+            stmt.setString(3, password);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 utilisateur = new Utilisateurs();
@@ -236,12 +201,12 @@ public class UtilisateurDAOImpl extends MaConnexion  implements DAOConnect {
 
             }
             if (utilisateur == null)
-                throw new DALException("Il n'y a pas d'utilisateur avec cet email et et ce mot de passe.");
+                throw new DALException("Il n'y a pas d'utilisateur avec ces indentifiants");
             cnx.close();
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DALException("Problème dans la connexion d'un utilisateur par son email");
+            throw new DALException("Problème dans la connexion d'un utilisateur");
         }
         return utilisateur;
     }
