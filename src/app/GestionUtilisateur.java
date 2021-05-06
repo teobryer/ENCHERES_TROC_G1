@@ -1,10 +1,9 @@
 package app;
 
 import app.bll.BusinessException;
-import app.bll.UtilisateurManagerSingleton;
+import app.bll.ManagerFactory;
 import app.bo.Utilisateurs;
 
-import javax.servlet.ServletException;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,7 +25,7 @@ public class GestionUtilisateur {
     public Response connexion(@FormParam("login") String login, @FormParam("password") String password) throws Exception {
         Response response;
         try {
-            Utilisateurs user =  UtilisateurManagerSingleton.getInstance().seConnecter(login, password);
+            Utilisateurs user =  ManagerFactory.utilisateurManager().seConnecter(login, password);
             response= Response.ok().entity(user).build();
 
         } catch (BusinessException e) {
@@ -60,7 +59,7 @@ public class GestionUtilisateur {
         utilisateur.setAdministrateur(false);
 
         try {
-            UtilisateurManagerSingleton.getInstance().inscrireUtilisateur(utilisateur);
+            ManagerFactory.utilisateurManager().inscrireUtilisateur(utilisateur);
             response= Response.ok().build();
         }catch (BusinessException e) {
             response=Response.status(401).entity(e).build();

@@ -1,7 +1,6 @@
 package app.dal;
 
 import app.bo.Enchere;
-import app.bo.Note;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
