@@ -12,7 +12,7 @@ public class Articles_VendusManager implements IArticles_VendusManager {
     @Override
     public Articles_Vendus vendreUnArticle(String nom_article, String description, int no_categorie,
                                            int prixDeDepart, Date date_debut_encheres, Date date_fin_encheres,
-                                           String rueRecup, String cpRecup, String villeRecup, Utilisateurs utilisateur)
+                                           String rueRecup, String cpRecup, String villeRecup, Utilisateurs vendeur)
             throws BusinessException {
 
         Articles_Vendus nouvelArticle = new Articles_Vendus();
@@ -22,7 +22,7 @@ public class Articles_VendusManager implements IArticles_VendusManager {
         nouvelArticle.setDate_fin_encheres(date_fin_encheres);
         nouvelArticle.setPrix_initial(prixDeDepart);
         nouvelArticle.setPrix_vente((Integer) null);
-//       nouvelArticle.setUtilisateur(); //TODO Utilisateur connecté
+        nouvelArticle.setUtilisateur(vendeur);
         nouvelArticle.setNo_categorie(no_categorie);
         Retraits adresseDeRetrait = new Retraits();
         adresseDeRetrait.setRue(rueRecup);

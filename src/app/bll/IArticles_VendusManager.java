@@ -21,7 +21,7 @@ public interface IArticles_VendusManager {
      * @param rueRecup            rue de récupération de l'article - par défaut celle du vendeur
      * @param cpRecup             Code Postal de récupération de l'article - par défaut celle du vendeur
      * @param villeRecup          Ville de récupération de l'article - par défaut celle du vendeur
-     * @param vendeur             Automatiquement set - vendeur de l'article
+     * @param vendeur             Automatiquement set - vendeur de l'article - utilisateur connecté
      * @return l'article ajouté dans la liste des articles à vendre
      * @throws BusinessException
      */
