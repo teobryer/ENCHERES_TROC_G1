@@ -6,10 +6,11 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter("/api/utilisateur/suppression/*")
-public class ApiFilter  implements Filter {
+public class SuppressionUtilisateurFilter implements Filter {
 
 
     @Override
@@ -23,8 +24,8 @@ public class ApiFilter  implements Filter {
           int id =   isCorrectPath(((HttpServletRequest)servletRequest).getRequestURL().toString());
             HttpServletResponse resp = (HttpServletResponse)servletResponse;
             HttpServletRequest req = (HttpServletRequest) servletRequest;
-
-            Utilisateurs user  = (Utilisateurs) req.getSession().getAttribute("connectedUser");
+            HttpSession session =  req.getSession(false);
+            Utilisateurs user  = (Utilisateurs) session.getAttribute("connectedUser");
 
             if( user.getNo_utilisateur() == id || user.isAdministrateur()){ /// Si l'utilisateur connecté est celui supprimé ou si l'utilisateur connecté est administrateur
                filterChain.doFilter(servletRequest, servletResponse);
