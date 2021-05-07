@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EnchereDAOImpl implements DAO<Enchere> {
+public class EnchereDAOImpl extends MaConnexion implements DAO<Enchere> {
 
     private final String SELECT_BY_ID = "USE Encheres SELECT * FROM Encheres WHERE no_enchere=?";
     private final String SELECT_ALL = "USE Encheres SELECT * FROM Encheres";
@@ -20,23 +20,6 @@ public class EnchereDAOImpl implements DAO<Enchere> {
     private final String INSERT = "INSERT INTO Encheres (date_enchere, montant_enchere, " +
                                     "no_article, no_utilisateur) VALUES (?, ?, ?, ?)";
     private final String DELETE = "USE Encheres DELETE FROM Encheres WHERE no_enchere = ?";
-
-
-    private Connection connect() {
-        try {
-            // Je vais chercher le fichier context.xml
-            Context context = new InitialContext();
-            // Je vais lire le fichier context.xml
-            DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx");
-            // J'ouvre une connection
-            Connection cnx = ds.getConnection();
-            return cnx;
-        } catch (NamingException | SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
 
     @Override
     public Enchere selectById(int id) throws DALException {
