@@ -103,7 +103,9 @@
                             url: "http://localhost:8080/troc_encheres_groupe_1/api/utilisateur/inscription",
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                             contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                            success: connexion(pseudo, mot_de_passe),
+                            success:function(data){
+                                connexion(pseudo, mot_de_passe)
+                            } ,
                             error: function (data) {
                                 console.log("data", data);
 
