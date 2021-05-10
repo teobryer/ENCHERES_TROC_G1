@@ -8,10 +8,7 @@ import app.bo.Retraits;
 import app.bo.Utilisateurs;
 import app.dal.DAOFact;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
@@ -67,5 +64,19 @@ public class GestionArticleService {
             response = Response.status(401).entity(e).build();
         }
         return response;
+    }
+
+    @GET
+    @Path("/{id: \\d+}")
+    public Response recupererArticle(@PathParam("id") int idArticle) throws Exception {
+        Response response;
+        try {
+          Articles_Vendus a =   ManagerFactory.articlesVendusManager().recupererArticleParId(idArticle);
+            response = Response.ok().entity(a).build();
+        } catch (BusinessException e) {
+            response=Response.status(404).entity(e).build();
+            return  response;
+        }
+        return  response;
     }
 }

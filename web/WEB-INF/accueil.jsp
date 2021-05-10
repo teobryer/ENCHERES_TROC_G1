@@ -109,7 +109,5 @@ afficherArticles();
 </body>
 </html>
 
-}
-
 
 
