@@ -1,4 +1,4 @@
-package app;
+package app.service;
 
 import app.bll.BusinessException;
 import app.bll.ManagerFactory;
