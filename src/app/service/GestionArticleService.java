@@ -51,7 +51,7 @@ public class GestionArticleService {
         article.setDate_fin_encheres(date_fin_encheres);
         article.setPrix_initial(prix_initial);
         article.setUtilisateur(DAOFact.getUtilisateursDAO().selectById(no_utilisateur));
-        article.setNo_categorie(no_categorie);
+        article.setCategorie(DAOFact.getCategoriesDAO().selectById(no_categorie));
         // SET RETRAIT
         Retraits adresseDeRetrait = new Retraits();
         adresseDeRetrait.setRue(rue);
