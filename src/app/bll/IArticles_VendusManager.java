@@ -5,6 +5,7 @@ import app.bo.Utilisateurs;
 
 
 import java.util.Date;
+import java.util.List;
 
 
 public interface IArticles_VendusManager {
@@ -29,5 +30,10 @@ public interface IArticles_VendusManager {
                                     Date date_debut_encheres, Date date_fin_encheres, String rueRecup, String cpRecup,
                                     String villeRecup, Utilisateurs vendeur) throws BusinessException;
 
-
+    /**
+     *
+     * @return Renvoie la liste des tous les articles en ventes
+     * @throws BusinessException
+     */
+    List<Articles_Vendus> recupererLesArticles()  throws BusinessException;
 }

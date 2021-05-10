@@ -37,7 +37,7 @@ public class SuppressionUtilisateurFilter implements Filter {
 
         }
         catch (Exception e){
-
+            filterChain.doFilter(servletRequest, servletResponse);
         }
 
        }
