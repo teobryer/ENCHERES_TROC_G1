@@ -13,10 +13,9 @@
 
     <c:if test="${sessionScope.connectedUser != null}">
         <div class="navbar-text">
-            <button class="btn btn-info" onclick="supprimer()">Supprimer mon compte</button>
             <a  class="mr-2"  href="accueil">Enchères</a>
             <a  class="mr-2"  href="vendreArticle">Vendre un article</a>
-            <a class="mr-2" href="profil">${sessionScope.connectedUser.pseudo}</a>
+            <a class="mr-2" href="consultation">${sessionScope.connectedUser.pseudo}</a>
             <a  href="deconnexion">Déconnexion</a>
         </div>
     </c:if>

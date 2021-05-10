@@ -10,4 +10,6 @@ public interface IUtilisateurManager {
     void inscrireUtilisateur(Utilisateurs user)throws BusinessException;
 
     void supprimerUtilisateur(int idUser) throws BusinessException;
+    void modifierUtilisateur(Utilisateurs user, String nouveau_mot_de_passe) throws BusinessException;
+
 }
