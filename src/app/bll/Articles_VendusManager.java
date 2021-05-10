@@ -6,6 +6,7 @@ import app.bo.Utilisateurs;
 import app.dal.DAOFact;
 
 import java.util.Date;
+import java.util.List;
 
 public class Articles_VendusManager implements IArticles_VendusManager {
 
@@ -33,6 +34,17 @@ public class Articles_VendusManager implements IArticles_VendusManager {
             return DAOFact.getArticlesDAO().insert(nouvelArticle);
         } catch (Exception e) {
             throw new BusinessException("Article non inséré", "Problème lors de l'insertion de l'article");
+        }
+    }
+
+    @Override
+    public List<Articles_Vendus> recupererLesArticles() throws BusinessException {
+        try{
+         return DAOFact.getArticlesDAO().selectAll();
+        }
+
+        catch (Exception e){
+            throw new BusinessException("Articles non récupérées", "Problème dans le récupération des articles");
         }
     }
 }
