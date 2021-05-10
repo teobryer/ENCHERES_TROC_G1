@@ -97,21 +97,21 @@ public class GestionUtilisateur {
         utilisateur.setNo_utilisateur(no_utilisateur);
         utilisateur.setPseudo(pseudo);
         utilisateur.setPrenom(prenom);
+        utilisateur.setMot_de_passe(nouveau_mot_de_passe);
         utilisateur.setNom(nom);
         utilisateur.setEmail(email);
         utilisateur.setTelephone(telephone);
         utilisateur.setRue(rue);
         utilisateur.setCode_postal(code_postal);
         utilisateur.setVille(ville);
-        utilisateur.setCredit(100);
-        utilisateur.setAdministrateur(false);
+        utilisateur.setCredit(-1);
         Response response;
 
         try {
-            ManagerFactory.utilisateurManager().modifierUtilisateur(utilisateur, nouveau_mot_de_passe);
+            ManagerFactory.utilisateurManager().modifierUtilisateur(utilisateur, ancien_mot_de_passe);
             response = Response.ok().build();
         } catch (BusinessException e) {
-            response = Response.status(304).entity(e).build();
+            response = Response.status(401).entity(e).build();
             return response;
         }
         return response;
