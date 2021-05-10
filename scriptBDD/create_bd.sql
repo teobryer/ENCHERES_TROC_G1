@@ -96,9 +96,12 @@ ON DELETE NO ACTION
     ON UPDATE no action 
 
 
---- COMPLEMENT 
-
-
+--- COMPLEMENT
 ALTER TABLE UTILISATEURS ADD CONSTRAINT Unique_Pseudo UNIQUE (pseudo);
 ALTER TABLE UTILISATEURS ADD CONSTRAINT Unique_Email UNIQUE (email);
 
+INSERT INTO CATEGORIES (libelle) VALUES
+('Informatique'),
+('Ameublement'),
+('Vêtement'),
+('Sport&Loisir');

@@ -1,14 +1,7 @@
 package app.dal;
 
-import app.bll.ManagerFactory;
-import app.bll.UtilisateurManager;
 import app.bo.Articles_Vendus;
-import app.bo.Enchere;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +9,7 @@ import java.util.List;
 
 public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_Vendus> {
 
-    private final String SELECT_BY_ID = "SELECT * FROM Articles_Vendus WHERE no_article=?";
+    private final String SELECT_BY_ID = "SELECT * FROM Categories WHERE no_categorie=?";
     private final String SELECT_ALL = "SELECT * FROM Articles_Vendus";
     private final String UPDATE = "UPDATE Articles_Vendus SET nom_article = ?, description = ?," +
                                     " date_debut_encheres = ?, date_fin_echeres = ?, prix_initial = ?" +
@@ -54,7 +47,7 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
                 articles_Vendus.setPrix_initial(prix_initial);
                 articles_Vendus.setPrix_vente(prix_vente);
                 articles_Vendus.setUtilisateur(DAOFact.getUtilisateursDAO().selectById(no_utilisateur));
-                articles_Vendus.setNo_categorie(no_categorie); // TODO A changer quand catégorie sera fait
+                articles_Vendus.setCategorie(DAOFact.getCategoriesDAO().selectById(no_categorie));
             }
             cnx.close();
 
@@ -93,7 +86,7 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
                 articles_Vendus.setPrix_initial(prix_initial);
                 articles_Vendus.setPrix_vente(prix_vente);
                 articles_Vendus.setUtilisateur(DAOFact.getUtilisateursDAO().selectById(no_utilisateur));
-                articles_Vendus.setNo_categorie(no_categorie); // TODO A changer quand catégorie sera fait
+                articles_Vendus.setCategorie(DAOFact.getCategoriesDAO().selectById(no_categorie));
 
                 listeArticles_Vendus.add(articles_Vendus);
 
@@ -119,7 +112,7 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
             stmt.setInt(5, article_vendu.getPrix_initial());
             stmt.setInt(6, article_vendu.getPrix_vente());
             stmt.setInt(7, article_vendu.getUtilisateur().getNo_utilisateur());
-            stmt.setInt(8, article_vendu.getNo_categorie());
+            stmt.setInt(8, article_vendu.getCategorie().getNo_categorie());
             stmt.setInt(9, article_vendu.getNo_article());
             stmt.executeUpdate();
             cnx.close();
@@ -144,7 +137,7 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
             stmt.setInt(5, article_vendu.getPrix_initial());
             stmt.setInt(6, article_vendu.getPrix_vente());
             stmt.setInt(7, article_vendu.getUtilisateur().getNo_utilisateur());
-            stmt.setInt(8, article_vendu.getNo_categorie());
+            stmt.setInt(8, article_vendu.getCategorie().getNo_categorie());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             int generatedKey = 0;
