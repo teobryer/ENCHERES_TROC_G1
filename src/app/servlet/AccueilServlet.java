@@ -33,16 +33,6 @@ public class AccueilServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var v = req.getParameter("utilisateur");
-        ObjectMapper mapper = new ObjectMapper();
-        Utilisateurs user = mapper.readValue(v, Utilisateurs.class);
 
-        HttpSession session = req.getSession();
-        session.setAttribute("connectedUser", user);
-/// pour récupérer dans la session : session.getAttribute("connectedUser");
-   //     req.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(req, resp);
-
-
-//        this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(req, resp);
     }
 }
