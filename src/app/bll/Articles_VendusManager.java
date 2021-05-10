@@ -47,4 +47,15 @@ public class Articles_VendusManager implements IArticles_VendusManager {
             throw new BusinessException("Articles non récupérées", "Problème dans le récupération des articles");
         }
     }
+
+    @Override
+    public Articles_Vendus recupererArticleParId(int id) throws BusinessException {
+        try{
+            return DAOFact.getArticlesDAO().selectById(id);
+        }
+
+        catch (Exception e){
+            throw new BusinessException("Articles non récupéré", "Problème dans le récupération de l'article"+id);
+        }
+    }
 }

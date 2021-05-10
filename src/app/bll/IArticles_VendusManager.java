@@ -36,4 +36,6 @@ public interface IArticles_VendusManager {
      * @throws BusinessException
      */
     List<Articles_Vendus> recupererLesArticles()  throws BusinessException;
+
+    Articles_Vendus recupererArticleParId(int id) throws BusinessException;
 }
