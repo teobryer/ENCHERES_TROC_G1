@@ -10,8 +10,8 @@ import java.util.List;
 
 public class CategoriesDAOImpl extends MaConnexion implements DAO<Categories> {
 
-    private final String SELECT_BY_ID = "SELECT * FROM Categories WHERE no_categorie = ?";
-    private final String SELECT_ALL = "SELECT * FROM Categories";
+    private final String SELECT_BY_ID = "USE ENCHERES SELECT * FROM Categories WHERE no_categorie = ?";
+    private final String SELECT_ALL = "USE ENCHERES SELECT * FROM Categories";
 
     @Override
     public Categories selectById(int id) throws DALException {
