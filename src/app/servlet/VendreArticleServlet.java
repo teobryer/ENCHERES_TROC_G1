@@ -28,6 +28,7 @@ public class VendreArticleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         this.getServletContext().getRequestDispatcher("/WEB-INF/vendreArticle.jsp").forward(req, resp);
     }
 }

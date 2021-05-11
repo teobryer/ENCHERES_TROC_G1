@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_Vendus> {
 
-    private final String SELECT_BY_ID = "SELECT * FROM Categories WHERE no_categorie=?";
+    private final String SELECT_BY_ID = "SELECT * FROM Articles_Vendus WHERE no_article=?";
     private final String SELECT_ALL = "SELECT * FROM Articles_Vendus";
     private final String UPDATE = "UPDATE Articles_Vendus SET nom_article = ?, description = ?," +
                                     " date_debut_encheres = ?, date_fin_echeres = ?, prix_initial = ?" +
-                                    ", prix_vente = ?, no_utilisateur = ?, noo_categorie = ? WHERE no_article = ?";
+                                    ", prix_vente = ?, no_utilisateur = ?, no_categorie = ? WHERE no_article = ?";
     private final String INSERT = "INSERT INTO Articles_Vendus (nom_article, description, date_debut_encheres, " +
                                     "date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie)" +
                                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -107,13 +107,12 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
             PreparedStatement stmt = cnx.prepareStatement(UPDATE);
             stmt.setString(1, article_vendu.getNom_article());
             stmt.setString(2, article_vendu.getDescription());
-            stmt.setDate(3, (Date) article_vendu.getDate_fin_encheres());
+            stmt.setDate(3, (Date) article_vendu.getDate_debut_encheres());
             stmt.setDate(4, (Date) article_vendu.getDate_fin_encheres());
             stmt.setInt(5, article_vendu.getPrix_initial());
             stmt.setInt(6, article_vendu.getPrix_vente());
             stmt.setInt(7, article_vendu.getUtilisateur().getNo_utilisateur());
             stmt.setInt(8, article_vendu.getCategorie().getNo_categorie());
-            stmt.setInt(9, article_vendu.getNo_article());
             stmt.executeUpdate();
             cnx.close();
         } catch (Exception e) {
@@ -132,7 +131,7 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
 
             stmt.setString(1, article_vendu.getNom_article());
             stmt.setString(2, article_vendu.getDescription());
-            stmt.setDate(3, (Date) article_vendu.getDate_fin_encheres());
+            stmt.setDate(3, (Date) article_vendu.getDate_debut_encheres());
             stmt.setDate(4, (Date) article_vendu.getDate_fin_encheres());
             stmt.setInt(5, article_vendu.getPrix_initial());
             stmt.setInt(6, article_vendu.getPrix_vente());

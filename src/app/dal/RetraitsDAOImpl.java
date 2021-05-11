@@ -10,7 +10,7 @@ public class RetraitsDAOImpl extends MaConnexion implements DAO<Retraits> {
     private final String SELECT_ALL = "USE ENCHERES SELECT * FROM Retraits";
     private final String SELECT_BY_ID = "USE ENCHERES SELECT * FROM Retraits WHERE no_article=?";
     //TODO: à finir
-    private final String UPDATE = "USE ENCHERES UPDATE Retraits SET rue = ?, code_postal = ?, ville = ? WHERE no_articles= ?";
+    private final String UPDATE = "USE ENCHERES UPDATE Retraits SET rue = ?, code_postal = ?, ville = ? WHERE no_article= ?";
     private final String INSERT = "USE ENCHERES INSERT INTO Retraits (rue, code_postal, ville) VALUES (?,?,?)";
     private final String DELETE = "USE ENCHERES DELETE FROM Retraits WHERE no_article= ?";
 
@@ -55,7 +55,6 @@ public class RetraitsDAOImpl extends MaConnexion implements DAO<Retraits> {
             PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                // TODO : ajouter la gestion de l'idCar dans la BO et le récupérer ici
                 // gitignore
                 int no_article = rs.getInt("no_article");
                 String rue = rs.getString("rue");
