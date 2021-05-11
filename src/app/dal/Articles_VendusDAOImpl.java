@@ -16,15 +16,15 @@ import java.util.List;
 
 public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_Vendus> {
 
-    private final String SELECT_BY_ID = "SELECT * FROM Articles_Vendus WHERE no_article=?";
-    private final String SELECT_ALL = "SELECT * FROM Articles_Vendus";
-    private final String UPDATE = "UPDATE Articles_Vendus SET nom_article = ?, description = ?," +
-                                    " date_debut_encheres = ?, date_fin_echeres = ?, prix_initial = ?" +
-                                    ", prix_vente = ?, no_utilisateur = ?, noo_categorie = ? WHERE no_article = ?";
-    private final String INSERT = "INSERT INTO Articles_Vendus (nom_article, description, date_debut_encheres, " +
+    private final String SELECT_BY_ID = "USE Encheres SELECT * FROM Articles_Vendus WHERE no_article=?";
+    private final String SELECT_ALL = " USE Encheres SELECT * FROM Articles_Vendus";
+    private final String UPDATE = " USE Encheres UPDATE Articles_Vendus SET nom_article = ?, description = ?," +
+                                    " date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?" +
+                                    ", prix_vente = ?, no_utilisateur = ?, no_categorie = ? WHERE no_article = ?";
+    private final String INSERT = "USE Encheres INSERT INTO Articles_Vendus (nom_article, description, date_debut_encheres, " +
                                     "date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie)" +
                                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    private final String DELETE = "DELETE FROM Articles_Vendus WHERE no_article = ?";
+    private final String DELETE = " USE Encheres DELETE FROM Articles_Vendus WHERE no_article = ?";
 
     @Override
     public Articles_Vendus selectById(int id) throws DALException {
@@ -55,6 +55,13 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
                 articles_Vendus.setPrix_vente(prix_vente);
                 articles_Vendus.setUtilisateur(DAOFact.getUtilisateursDAO().selectById(no_utilisateur));
                 articles_Vendus.setNo_categorie(no_categorie); // TODO A changer quand catégorie sera fait
+                try{
+                articles_Vendus.setRetrait(DAOFact.getRetraitsDAO().selectById(no_article));
+                }
+                catch (Exception e) {
+
+                    articles_Vendus.setRetrait(null);
+                }
             }
             cnx.close();
 
@@ -94,7 +101,12 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
                 articles_Vendus.setPrix_vente(prix_vente);
                 articles_Vendus.setUtilisateur(DAOFact.getUtilisateursDAO().selectById(no_utilisateur));
                 articles_Vendus.setNo_categorie(no_categorie); // TODO A changer quand catégorie sera fait
+                try{
+                    articles_Vendus.setRetrait(DAOFact.getRetraitsDAO().selectById(no_article));}
+                catch (Exception e) {
 
+                    articles_Vendus.setRetrait(null);
+                }
                 listeArticles_Vendus.add(articles_Vendus);
 
             }
