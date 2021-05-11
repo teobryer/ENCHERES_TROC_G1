@@ -231,6 +231,47 @@ function compte_a_rebours()
 }
 
     recupererArticle();
+
+    function encherir(){
+        var proposition =  $("#proposition").val();
+
+    }
+let temps, secondesAuto = 0;
+function resetTemps()
+{
+console.log("reset-temps");
+    clearInterval(temps);
+    secondesAuto = 0;
+    temps = setInterval(startTemps, 1000);
+}
+
+window.onload = resetTemps;
+window.ontouchstart = resetTemps;
+window.onclick = resetTemps;
+window.onkeypress = resetTemps;
+window.onmousemove = resetTemps;
+window.onmousedown = resetTemps;
+
+function startTemps()
+{
+    secondesAuto++;
+
+}
+
+function updateArticle(){
+    setInterval(recupererArticleSiActif, 3000);
+}
+
+function recupererArticleSiActif(){
+console.log("recupererArticleSiActif | secondes : "+ secondesAuto)
+    if(secondesAuto< 10){
+        console.log("recuperation de l'article");
+   recupererArticle();
+    }
+
+}
+updateArticle();
+
 </script>
 
 

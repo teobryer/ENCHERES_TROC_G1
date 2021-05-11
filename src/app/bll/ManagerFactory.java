@@ -9,4 +9,8 @@ public class ManagerFactory {
     public static IArticles_VendusManager articlesVendusManager() {
         return new Articles_VendusManager();
     }
+
+    public static IEncheresManager encheresManager() {
+        return new EnchereManager();
+    }
 }

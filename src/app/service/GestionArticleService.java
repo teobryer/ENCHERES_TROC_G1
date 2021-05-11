@@ -4,6 +4,7 @@ package app.service;
 import app.bll.BusinessException;
 import app.bll.ManagerFactory;
 import app.bo.Articles_Vendus;
+import app.bo.Enchere;
 import app.bo.Retraits;
 import app.bo.Utilisateurs;
 import app.dal.DAOFact;
@@ -73,6 +74,20 @@ public class GestionArticleService {
         try {
           Articles_Vendus a =   ManagerFactory.articlesVendusManager().recupererArticleParId(idArticle);
             response = Response.ok().entity(a).build();
+        } catch (BusinessException e) {
+            response=Response.status(404).entity(e).build();
+            return  response;
+        }
+        return  response;
+    }
+
+    @POST
+    @Path("/encherir")
+    public Response encherir(@FormParam("id") int idArticle, @FormParam("proposition") int proposition, @FormParam("proposition") int idUser) throws Exception {
+        Response response;
+        try {
+            Enchere e =  ManagerFactory.encheresManager().insererNouvelleEnchere(new Date(), proposition, idArticle, idUser);
+            response = Response.ok().entity(e).build();
         } catch (BusinessException e) {
             response=Response.status(404).entity(e).build();
             return  response;
