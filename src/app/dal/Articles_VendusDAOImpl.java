@@ -62,6 +62,7 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
 
                     articles_Vendus.setRetrait(null);
                 }
+                articles_Vendus.setCategorie(DAOFact.getCategoriesDAO().selectById(no_categorie));
             }
             cnx.close();
 
@@ -100,6 +101,7 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
                 articles_Vendus.setPrix_initial(prix_initial);
                 articles_Vendus.setPrix_vente(prix_vente);
                 articles_Vendus.setUtilisateur(DAOFact.getUtilisateursDAO().selectById(no_utilisateur));
+                articles_Vendus.setCategorie(DAOFact.getCategoriesDAO().selectById(no_categorie));
                 articles_Vendus.setNo_categorie(no_categorie); // TODO A changer quand catégorie sera fait
                 try{
                     articles_Vendus.setRetrait(DAOFact.getRetraitsDAO().selectById(no_article));}

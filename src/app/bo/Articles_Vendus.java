@@ -15,6 +15,7 @@ public class Articles_Vendus {
     private int prix_initial;
     private int prix_vente;
     private Utilisateurs utilisateur;
+    private Categories categorie;
     private int no_categorie;
     private Retraits retrait;
 
