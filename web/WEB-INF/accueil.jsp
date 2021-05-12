@@ -32,18 +32,12 @@
            <div class="col-6">
                <label for="filtre">Filtres</label>
                <input type="text" name="filtre" id="filtre" placeholder="Le nom de l'article contient">
-               <label for="browser">Catégorie:</label>
-               <input list="browsers" name="browser" id="browser">
-               <datalist id="browsers">
-                   <option value="Catégori_1">
-                   <option value="Catégori_2">
-                   <option value="Catégori_3">
-                   <option value="Catégori_4">
-                   <option value="Catégori_5">
-               </datalist>
+               <label for="browsers">Catégorie:</label>
+               <select id="browsers">
+               </select>
            </div>
            <div class="col-6">
-               <button class="btn btn-success">Recherche</button>
+               <button onclick="resultatRecherche()" class="btn btn-success">Recherche</button>
            </div>
        </div>
 
@@ -95,8 +89,6 @@
 
     function afficherArticles() {
         //$("#notes").remove();
-
-
         $.ajax({
             type:"GET",
             url: "http://localhost:8080/troc_encheres_groupe_1/api/articles",
@@ -105,14 +97,11 @@
                 $.each(data, (cpt, article) => {
                     console.log(article);
                     ajouterArticle(article["nom_article"],article["description"],article["date_debut_encheres"],article["date_fin_encheres"],article["prix_initial"],article["prix_vente"],article["utilisateur"]["pseudo"],article["no_categorie"]);
-
                 });
                 notifier("Succès","Récupération des données");
-
             },
             error: function (data) {
                 console.log("data", data);
-
                 notifier(data.responseJSON.title,data.responseJSON.message)
             }
         });
@@ -121,15 +110,16 @@
     afficherArticles();
 
     function afficherCategories() {
-        //$("#notes").remove();
-
-
         $.ajax({
             type:"GET",
             url: "http://localhost:8080/troc_encheres_groupe_1/api/categories",
             success: function(data){
-                console.log(data);
-
+                $.each(data, (cpt, categorie) => {
+                    $('#browsers').append($('<option>', {
+                        value: categorie['no_categorie'],
+                        text: categorie['libelle']
+                    }));
+                });
                 notifier("Succès","Récupération des catégories");
 
             },
@@ -141,6 +131,12 @@
         });
     }
 
+    function resultatRecherche(){
+        let nom = $('#filtre').val();
+        let categorieName = $('#browsers').children("option:selected").text();
+    }
+
+    afficherCategories();
 </script>
 
 
