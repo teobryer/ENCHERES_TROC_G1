@@ -147,7 +147,7 @@
                 $.ajax({
                     type: "POST",
                     data: {utilisateur: JSON.stringify(data)},
-                    url: "accueil",
+                    url: "connexion",
                     success: function (data) {
                         window.location = 'accueil'
                     }

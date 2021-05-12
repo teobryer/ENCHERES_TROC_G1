@@ -10,6 +10,8 @@ public class ManagerFactory {
         return new Articles_VendusManager();
     }
 
+    public static ICategoriesManager categoriesManager(){return new CategoriesManager();}
+
     public static IEncheresManager encheresManager() {
         return new EnchereManager();
     }

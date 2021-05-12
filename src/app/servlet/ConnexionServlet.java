@@ -1,5 +1,8 @@
 package app.servlet;
 
+import app.bo.Utilisateurs;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +32,11 @@ public class ConnexionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var v = req.getParameter("utilisateur");
+        ObjectMapper mapper = new ObjectMapper();
+        Utilisateurs user = mapper.readValue(v, Utilisateurs.class);
 
-        this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(req, resp);
+        HttpSession session = req.getSession();
+        session.setAttribute("connectedUser", user);
     }
 }

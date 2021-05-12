@@ -30,10 +30,6 @@
         <div>
             <label for="no_categorie" class="form-label">Catégorie :</label>
             <select class="form-select" aria-label="Catégorie :" id="no_categorie">
-                <option value="1">InformatiqueA MODIFIER</option>
-                <option value="2">Ameublement</option>
-                <option value="3">Vêtement</option>
-                <option value="4">Sport&Loisir</option>
             </select>
         </div>
         <div>
@@ -88,10 +84,9 @@
         let rue = $("#rue").val();
         let ville = $("#ville").val();
 
-        <%--console.log("session", sessionScope);--%>
-        <%--console.log('${sessionScope.connectedUser}');--%>
-        <%--let no_utilisateur ='${sessionScope.connectedUser.no_utilisateur}';--%>
-        let no_utilisateur = 1;
+        // Récupération en session d l'utilisateur
+        let no_utilisateur = '${sessionScope.connectedUser.no_utilisateur}';
+        // Concaténation des jours mois et années pour les transformer en date
         let day, month, year;
         day = date_debut_encheres.getDate();
         if (day < 10) {
@@ -139,6 +134,28 @@
                 console.log("data", data);
                 window.location = 'accueil';
                 notifier("Succès", "Article mis en vente");
+            }
+        });
+    }
+
+    function recupererCategories() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/troc_encheres_groupe_1/api/categories",
+            success: function (data) {
+                $.each(data, (cpt, categorie) => {
+                    $('#no_categorie').append($('<option>', {
+                        value: categorie['no_categorie'],
+                        text: categorie['libelle']
+                    }));
+                });
+                notifier("Succès", "Récupération des catégories");
+
+            },
+            error: function (data) {
+                console.log("data", data);
+
+                notifier(data.responseJSON.title, data.responseJSON.message)
             }
         });
     }
