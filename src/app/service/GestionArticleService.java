@@ -1,6 +1,5 @@
 package app.service;
 
-
 import app.bll.BusinessException;
 import app.bll.ManagerFactory;
 import app.bo.Articles_Vendus;
@@ -11,10 +10,7 @@ import app.dal.DAOFact;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Path("/articles")
