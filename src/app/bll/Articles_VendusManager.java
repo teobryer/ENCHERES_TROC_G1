@@ -14,6 +14,7 @@ public class Articles_VendusManager implements IArticles_VendusManager {
 
         try {
             article = DAOFact.getArticlesDAO().insert(article);
+            adresse_de_retrait.setNo_article(article.getNo_article());
             adresse_de_retrait = DAOFact.getRetraitsDAO().insert(adresse_de_retrait);
         } catch (DALException e) {
             throw new BusinessException("Article non inséré","Problème lors de l'ajout de l'article.");
@@ -28,7 +29,7 @@ public class Articles_VendusManager implements IArticles_VendusManager {
         }
 
         catch (Exception e){
-            throw new BusinessException("Articles non récupérées", "Problème dans le récupération des articles");
+            throw new BusinessException("Articles non récupérés", "Problème dans le récupération des articles");
         }
     }
 

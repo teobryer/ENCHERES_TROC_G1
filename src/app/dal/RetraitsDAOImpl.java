@@ -11,7 +11,7 @@ public class RetraitsDAOImpl extends MaConnexion implements DAO<Retraits> {
     private final String SELECT_BY_ID = "USE ENCHERES SELECT * FROM Retraits WHERE no_article=?";
     //TODO: à finir
     private final String UPDATE = "USE ENCHERES UPDATE Retraits SET rue = ?, code_postal = ?, ville = ? WHERE no_article= ?";
-    private final String INSERT = "USE ENCHERES INSERT INTO Retraits (rue, code_postal, ville) VALUES (?,?,?)";
+    private final String INSERT = "USE ENCHERES INSERT INTO Retraits (no_article, rue, code_postal, ville) VALUES (?,?,?,?)";
     private final String DELETE = "USE ENCHERES DELETE FROM Retraits WHERE no_article= ?";
 
     @Override
@@ -103,16 +103,11 @@ public class RetraitsDAOImpl extends MaConnexion implements DAO<Retraits> {
             //
             PreparedStatement stmt = cnx.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, retraits.getRue());
-            stmt.setString(2, retraits.getCode_postal());
-            stmt.setString(3, retraits.getVille());
+            stmt.setInt(1, retraits.getNo_article());
+            stmt.setString(2, retraits.getRue());
+            stmt.setString(3, retraits.getCode_postal());
+            stmt.setString(4, retraits.getVille());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            int generatedKey = 0;
-            if (rs.next()) {
-                generatedKey = rs.getInt(1);
-            }
-            retraits.setNo_article(generatedKey);
 
             cnx.close();
         } catch (Exception e) {
