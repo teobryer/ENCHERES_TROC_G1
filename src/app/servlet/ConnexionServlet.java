@@ -5,10 +5,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/connexion")
@@ -38,5 +35,12 @@ public class ConnexionServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         session.setAttribute("connectedUser", user);
+
+        var rememberMe = req.getParameter("rememberMe");
+        if ("true".equals(rememberMe)) {
+            Cookie cookie = new Cookie("login", user.getPseudo());
+            cookie.setMaxAge(10000);
+            resp.addCookie(cookie);
+        }
     }
 }

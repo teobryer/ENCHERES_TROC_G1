@@ -68,7 +68,7 @@
     </div>
 
     <button type="submit" id="creer" class="btn btn-primary">Enregistrer</button>
-    <button type="button" class="btn btn-secondary" onclick="form.action='AccueilServlet'">Annuler</button>
+    <a href="accueil"><button type="button" class="btn btn-secondary">Annuler</button></a>
 </form>
 
 <jsp:include page="footer.jsp"></jsp:include>
