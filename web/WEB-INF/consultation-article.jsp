@@ -78,7 +78,7 @@
 <%--                    </h5>--%>
 
                     <div class="action">
-                        <button class="add-to-cart btn btn-default" type="button">Enchérir</button>
+                        <button onclick="encherir()" class="add-to-cart btn btn-default" type="button">Enchérir</button>
 
                     </div>
                 </div>
@@ -110,15 +110,17 @@
 <%--</div>--%>
 <script>
 var dateEvent;
+var articleCourrant = null;
     function afficherArticle(article){
-        $("#meilleure_offre").text(article["prix_vente"]+ ' points');
+        console.log(article);
+        $("#meilleure_offre").text(article["enchereMax"]["montant_enchere"]+ ' points');
         $("#nom_article").text(article["nom_article"]);
         $("#description").text ( article["description"]);
         $("#mise_a_prix").text( article["prix_initial"] + ' points');
     //    $("#fin_encheres").text(article["date_fin_encheres"]);
         $("#retrait").text(article["retrait"]["rue"]+", "+ article["retrait"]["code_postal"]+", "+ article["retrait"]["ville"]);
         $("#vendeur").text( article["utilisateur"]["pseudo"]);
-        $("#proposition").prop('min',parseInt(article["prix_vente"])+1);
+        $("#proposition").prop('min',parseInt(article["enchereMax"]["montant_enchere"])+1);
 
 dateEvent =  new Date(article["date_fin_encheres"]);
         compte_a_rebours();
@@ -130,6 +132,7 @@ dateEvent =  new Date(article["date_fin_encheres"]);
             url: "http://localhost:8080/troc_encheres_groupe_1/api/articles/"+${requestScope.id},
             success: function(article){
                 console.log(article);
+                articleCourrant = article;
                 notifier("Succès","Récupération des données");
                 afficherArticle(article);
 
@@ -272,13 +275,43 @@ console.log("recupererArticleSiActif | secondes : "+ secondesAuto)
 }
 updateArticle();
 
+function encherir(){
+
+    let proposition = $("#proposition").val();
+    let idArticle = articleCourrant["no_article"];
+    console.log(articleCourrant);
+    console.log(articleCourrant["no_article"]);
+    let userID = "${sessionScope.connectedUser.no_utilisateur}";
+    $.ajax({
+        type:"POST",
+        data: {idArticle: idArticle, idUser: userID , proposition: proposition},
+        url: "http://localhost:8080/troc_encheres_groupe_1/api/articles/encherir",
+        success: function(data){
+
+            notifier2("Succès","Enchère envoyée",1);
+            recupererArticle();
+
+
+
+
+        },
+        error: function (data) {
+            console.log("data", data);
+
+            notifier2(data.responseJSON.title,data.responseJSON.message,0)
+        }
+    });
+
+}
+
 </script>
 
 
 
 
-<jsp:include page="error_fragment.jsp"></jsp:include>
+
 <jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="error_fragment.jsp"></jsp:include>
 </body>
 </html>
 

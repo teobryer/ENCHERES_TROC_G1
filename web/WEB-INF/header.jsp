@@ -16,14 +16,14 @@
             <a  class="mr-2"  href="/troc_encheres_groupe_1/accueil">Enchères</a>
             <a  class="mr-2"  href="/troc_encheres_groupe_1/vendreArticle">Vendre un article</a>
             <a class="mr-2" href="/troc_encheres_groupe_1/consultation">${sessionScope.connectedUser.pseudo}</a>
-            <a  href="deconnexion">Déconnexion</a>
+            <a  href="/troc_encheres_groupe_1/deconnexion">Déconnexion</a>
         </div>
     </c:if>
 
     <c:if test="${sessionScope.connectedUser == null}">
         <div class="navbar-text">
-            <a class="mr-2" href="inscription">S'inscrire</a>
-            <a  href="connexion">Se connecter</a>
+            <a class="mr-2" href="/troc_encheres_groupe_1/inscription">S'inscrire</a>
+            <a  href="/troc_encheres_groupe_1/connexion">Se connecter</a>
         </div>
     </c:if>
 
