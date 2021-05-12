@@ -22,7 +22,7 @@ public class GestionArticleService {
         Response response;
 
         try {
-          List<Articles_Vendus> articles =ManagerFactory.articlesVendusManager().recupererLesArticles();
+            List<Articles_Vendus> articles =ManagerFactory.articlesVendusManager().recupererLesArticles();
             response= Response.ok().entity(articles).build();
         }catch (BusinessException e) {
             response=Response.status(404).entity(e).build();
