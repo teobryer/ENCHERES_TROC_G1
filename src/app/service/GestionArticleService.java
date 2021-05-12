@@ -86,7 +86,7 @@ public class GestionArticleService {
 
     @POST
     @Path("/encherir")
-    public Response encherir(@FormParam("id") int idArticle, @FormParam("proposition") int proposition, @FormParam("proposition") int idUser) throws Exception {
+    public Response encherir(@FormParam("idArticle") int idArticle, @FormParam("proposition") int proposition, @FormParam("idUser") int idUser) throws Exception {
         Response response;
         try {
             Enchere e =  ManagerFactory.encheresManager().insererNouvelleEnchere(new Date(), proposition, idArticle, idUser);

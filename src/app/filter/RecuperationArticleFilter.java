@@ -28,12 +28,7 @@ public class RecuperationArticleFilter implements Filter {
             HttpSession session =  req.getSession(false);
             Utilisateurs user  = (Utilisateurs) session.getAttribute("connectedUser");
 
-            if( user.getNo_utilisateur() == id || user.isAdministrateur()){ /// Si l'utilisateur connecté est celui supprimé ou si l'utilisateur connecté est administrateur
-                filterChain.doFilter(servletRequest, servletResponse);
-                if(user.getNo_utilisateur() == id){
-                    req.getSession().invalidate();
-                }
-            }
+            filterChain.doFilter(servletRequest, servletResponse);
 
 
         }

@@ -10,8 +10,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <div  class="toast" data-delay="5000" style="position: absolute; width: 300px; bottom: 5px; right: 10px;">
-        <div class="toast-header">
+    <div id="toaster" class="toast" data-delay="5000" style=" z-index: 10; position: absolute; background: green; color:white; width: 300px; top: 70px; right: 10px;">
+        <div id="header" class="toast-header" style="background: green; color:white;">
             <img src="<c:url value="/img/attention.ico" />" class="rounded mr-2" alt="...">
             <strong id="title" class="mr-auto"></strong>
 
@@ -29,6 +29,19 @@ function notifier(title, text){
     $('#text').text(text);
     $('#title').text(title);
     $('.toast').toast('show');
+}
+
+function notifier2(title, text, succes){
+    if(succes == 0 ){
+        $('#toaster').css("background","red");
+        $('#header').css("background","red");
+    }
+    else{
+        $('#toaster').css("background","green");
+        $('#header').css("background","green");
+    }
+    notifier(title, text)
+
 }
 
 </script>

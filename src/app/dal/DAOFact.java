@@ -10,7 +10,7 @@ import app.bo.Retraits;
 public class DAOFact {
 
  	public static DAOConnect getUtilisateursDAO(){ return new UtilisateurDAOImpl();}
-    public static DAO<Enchere> getEncheresDAO() {
+    public static DAOEncheres getEncheresDAO() {
 		return new EnchereDAOImpl();
     }
     public static DAO<Articles_Vendus> getArticlesDAO() {

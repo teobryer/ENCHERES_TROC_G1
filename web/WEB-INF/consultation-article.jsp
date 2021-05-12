@@ -68,19 +68,15 @@
                     <h5 class="price">Fin de l'enchère : <span id="fin_encheres"><div id="compte_a_rebours"><noscript>Fin de l'évènement le 1er janvier 2018.</noscript></div></span></h5>
                     <h5 class="price">Retrait : <span id="retrait">10 allée des Alouettes, SAINT HERBLAIN 44800</span></h5>
                     <h5 class="price">Vendeur : <span id="vendeur">jojo44</span></h5>
-                    <h5 class="price">Proposition : <span>  <input type="number" class="form-label" id="proposition" min="0" required></span></h5>
 
-<%--                    <h5 class="sizes">sizes:--%>
-<%--                        <span class="size" data-toggle="tooltip" title="small">s</span>--%>
-<%--                        <span class="size" data-toggle="tooltip" title="medium">m</span>--%>
-<%--                        <span class="size" data-toggle="tooltip" title="large">l</span>--%>
-<%--                        <span class="size" data-toggle="tooltip" title="xtra large">xl</span>--%>
-<%--                    </h5>--%>
+                    <c:if test="${sessionScope.connectedUser != null}">
+                        <h5 class="price">Proposition : <span>  <input type="number" class="form-label" id="proposition" min="0" required></span></h5>
+                        <div class="action">
+                            <button onclick="encherir()" class="add-to-cart btn btn-default" type="button">Enchérir</button>
 
-                    <div class="action">
-                        <button class="add-to-cart btn btn-default" type="button">Enchérir</button>
+                        </div>
+                    </c:if>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -110,15 +106,26 @@
 <%--</div>--%>
 <script>
 var dateEvent;
+var articleCourrant = null;
     function afficherArticle(article){
-        $("#meilleure_offre").text(article["prix_vente"]+ ' points');
+        console.log(article);
+
+        try{
+            $("#meilleure_offre").text(article["enchereMax"]["montant_enchere"]+ ' points');
+            $("#proposition").prop('min',parseInt(article["enchereMax"]["montant_enchere"])+1);
+        }
+        catch (e) {
+            $("#meilleure_offre").text("Aucune offre actuellement");
+            $("#proposition").prop('min',parseInt(article["prix_initial"]+1));
+        }
+
         $("#nom_article").text(article["nom_article"]);
         $("#description").text ( article["description"]);
         $("#mise_a_prix").text( article["prix_initial"] + ' points');
     //    $("#fin_encheres").text(article["date_fin_encheres"]);
         $("#retrait").text(article["retrait"]["rue"]+", "+ article["retrait"]["code_postal"]+", "+ article["retrait"]["ville"]);
         $("#vendeur").text( article["utilisateur"]["pseudo"]);
-        $("#proposition").prop('min',parseInt(article["prix_vente"])+1);
+
 
 dateEvent =  new Date(article["date_fin_encheres"]);
         compte_a_rebours();
@@ -130,7 +137,8 @@ dateEvent =  new Date(article["date_fin_encheres"]);
             url: "http://localhost:8080/troc_encheres_groupe_1/api/articles/"+${requestScope.id},
             success: function(article){
                 console.log(article);
-                notifier("Succès","Récupération des données");
+                articleCourrant = article;
+              //  notifier("Succès","Récupération des données");
                 afficherArticle(article);
 
 
@@ -141,6 +149,7 @@ dateEvent =  new Date(article["date_fin_encheres"]);
                 console.log("data", data);
 
                 notifier(data.responseJSON.title,data.responseJSON.message)
+                window.location="../oups";
             }
         });
     }
@@ -272,13 +281,43 @@ console.log("recupererArticleSiActif | secondes : "+ secondesAuto)
 }
 updateArticle();
 
+function encherir(){
+
+    let proposition = $("#proposition").val();
+    let idArticle = articleCourrant["no_article"];
+    console.log(articleCourrant);
+    console.log(articleCourrant["no_article"]);
+    let userID = "${sessionScope.connectedUser.no_utilisateur}";
+    $.ajax({
+        type:"POST",
+        data: {idArticle: idArticle, idUser: userID , proposition: proposition},
+        url: "http://localhost:8080/troc_encheres_groupe_1/api/articles/encherir",
+        success: function(data){
+
+            notifier2("Succès","Enchère envoyée",1);
+            recupererArticle();
+
+
+
+
+        },
+        error: function (data) {
+            console.log("data", data);
+
+            notifier2(data.responseJSON.title,data.responseJSON.message,0)
+        }
+    });
+
+}
+
 </script>
 
 
 
 
-<jsp:include page="error_fragment.jsp"></jsp:include>
+
 <jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="error_fragment.jsp"></jsp:include>
 </body>
 </html>
 

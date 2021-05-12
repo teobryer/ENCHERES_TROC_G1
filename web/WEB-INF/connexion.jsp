@@ -44,7 +44,7 @@
             error: function (data) {
                 console.log("data", data);
 
-                notifier(data.responseJSON.title,data.responseJSON.message)
+                notifier(data.responseJSON.title,data.responseJSON.message);
             },
 
             type: "POST",

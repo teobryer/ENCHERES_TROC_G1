@@ -5,6 +5,8 @@ import app.bo.Articles_Vendus;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -56,6 +58,14 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
 
                     articles_Vendus.setRetrait(null);
                 }
+                try{
+                    articles_Vendus.setListEnchere(DAOFact.getEncheresDAO().selectAllByIdArticle(no_article));
+                    articles_Vendus.setEnchereMax( Collections.max(articles_Vendus.getListEnchere(), Comparator.comparing(c -> c.getMontant_enchere())));
+                }
+                catch (Exception e) {
+                    articles_Vendus.setEnchereMax(null);
+                    articles_Vendus.setListEnchere(null);
+                }
                 articles_Vendus.setCategorie(DAOFact.getCategoriesDAO().selectById(no_categorie));
             }
 
@@ -105,6 +115,14 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
                 catch (Exception e) {
 
                     articles_Vendus.setRetrait(null);
+                }
+                try{
+                    articles_Vendus.setListEnchere(DAOFact.getEncheresDAO().selectAllByIdArticle(no_article));
+                    articles_Vendus.setEnchereMax( Collections.max(articles_Vendus.getListEnchere(), Comparator.comparing(c -> c.getMontant_enchere())));
+                }
+                catch (Exception e) {
+                    articles_Vendus.setEnchereMax(null);
+                    articles_Vendus.setListEnchere(null);
                 }
                 listeArticles_Vendus.add(articles_Vendus);
 
