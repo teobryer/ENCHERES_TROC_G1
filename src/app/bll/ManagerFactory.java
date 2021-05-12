@@ -11,4 +11,8 @@ public class ManagerFactory {
     }
 
     public static ICategoriesManager categoriesManager(){return new CategoriesManager();}
+
+    public static IEncheresManager encheresManager() {
+        return new EnchereManager();
+    }
 }

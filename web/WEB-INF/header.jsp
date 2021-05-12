@@ -9,13 +9,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <nav class="navbar navbar-expand-xxl navbar-dark bg-dark" >
-    <a class="navbar-brand" href="accueil">ENI-Encheres</a>
+    <a class="navbar-brand" href="/troc_encheres_groupe_1/accueil">ENI-Encheres</a>
 
     <c:if test="${sessionScope.connectedUser != null}">
         <div class="navbar-text">
-            <a  class="mr-2"  href="accueil">Enchères</a>
-            <a  class="mr-2"  href="vendreArticle">Vendre un article</a>
-            <a class="mr-2" href="consultation">${sessionScope.connectedUser.pseudo}</a>
+            <a  class="mr-2"  href="/troc_encheres_groupe_1/accueil">Enchères</a>
+            <a  class="mr-2"  href="/troc_encheres_groupe_1/vendreArticle">Vendre un article</a>
+            <a class="mr-2" href="/troc_encheres_groupe_1/consultation">${sessionScope.connectedUser.pseudo}</a>
             <a  href="deconnexion">Déconnexion</a>
         </div>
     </c:if>

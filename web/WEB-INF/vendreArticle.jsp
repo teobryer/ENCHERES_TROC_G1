@@ -16,7 +16,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="error_fragment.jsp"></jsp:include>
 
-<form>
+<form onsubmit="ajouterArticle()">
     <div class="col">
         <input type="hidden" id="no_utilisateur">
         <div>
@@ -28,8 +28,8 @@
             <input type="text" class="form-control" id="description" required>
         </div>
         <div>
-            <label for="categorie" class="form-label">Catégorie :</label>
-            <select class="form-select" aria-label="Catégorie :" id="categorie">
+            <label for="no_categorie" class="form-label">Catégorie :</label>
+            <select class="form-select" aria-label="Catégorie :" id="no_categorie">
                 <option value="1">InformatiqueA MODIFIER</option>
                 <option value="2">Ameublement</option>
                 <option value="3">Vêtement</option>
@@ -41,36 +41,38 @@
             <input type="file" class="form-control" id="photo" accept="image/x-png,image/gif,image/jpeg,image/jpg">
         </div>
         <div>
-            <input type="number" class="form-label" id="prix_depart" min="0" required>
-            <label class="form-label" for="prix_depart">Mise à prix</label>
+            <input type="number" class="form-label" id="prix_initial" min="0" required>
+            <label class="form-label" for="prix_initial">Mise à prix</label>
         </div>
         <div>
-            <input type="datetime-local" class="form-label" id="debut_encheres" required>
-            <label class="form-label" for="debut_encheres">Début de la vente</label>
+            <input type="date" class="form-label" id="date_debut_encheres" required>
+            <label class="form-label" for="date_debut_encheres">Début de la vente</label>
         </div>
         <div>
-            <input type="datetime-local" class="form-label" id="fin_encheres" required>
-            <label class="form-label" for="debut_encheres">Fin de la vente</label>
+            <input type="date" class="form-label" id="date_fin_encheres" required>
+            <label class="form-label" for="date_fin_encheres">Fin de la vente</label>
         </div>
     </div>
 
 
     <%-- PARTIE RETRAIT --%>
-    <div class="mb-3">
-        <input type="text" class="form-label" id="rue" required>
-        <label class="form-label" for="rue">Rue :</label>
-    </div>
-    <div class="mb-3">
-        <input pattern="([0-9]{5})|([0-9][A|B][0-9]{3})" type="text" id="code_postal" required>
-        <label class="form-label" for="code_postal">Code postal :</label>
-    </div>
-    <div class="mb-3">
-        <input type="text" class="form-label" id="ville" required>
-        <label class="form-label" for="rue">Ville :</label>
+    <div class="col">
+        <div>
+            <label class="form-label" for="rue">Rue :</label>
+            <input type="text" class="form-control" id="rue" required>
+        </div>
+        <div>
+            <label class="form-label" for="code_postal">Code postal :</label>
+            <input class="form-control" pattern="([0-9]{5})|([0-9][A|B][0-9]{3})" type="text" id="code_postal" required>
+        </div>
+        <div>
+            <label class="form-label" for="ville">Ville :</label>
+            <input class="form-control" type="text" id="ville" required>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Enregistrer</button>
-    <button type="button" class="btn btn-secondary">Annuler</button>
+    <button type="submit" id="creer" class="btn btn-primary">Enregistrer</button>
+    <button type="button" class="btn btn-secondary" onclick="form.action='AccueilServlet'">Annuler</button>
 </form>
 
 <jsp:include page="footer.jsp"></jsp:include>
@@ -78,16 +80,39 @@
     function ajouterArticle() {
         let nom_article = $("#nom_article").val();
         let description = $("#description").val();
-        let date_debut_encheres = $("#date_debut_encheres").val();
-        let date_fin_encheres = $("#date_fin_encheres").val();
+        let date_debut_encheres = new Date($("#date_debut_encheres").val());
+        let date_fin_encheres = new Date($("#date_fin_encheres").val())
         let prix_initial = $("#prix_initial").val();
         let no_categorie = $("#no_categorie").val();
         let code_postal = $("#code_postal").val();
         let rue = $("#rue").val();
         let ville = $("#ville").val();
-        let btn_creer = $("#creer");
 
+        <%--console.log("session", sessionScope);--%>
+        <%--console.log('${sessionScope.connectedUser}');--%>
+        <%--let no_utilisateur ='${sessionScope.connectedUser.no_utilisateur}';--%>
         let no_utilisateur = 1;
+        let day, month, year;
+        day = date_debut_encheres.getDate();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        month = date_debut_encheres.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        year = date_debut_encheres.getFullYear();
+        date_debut_encheres = year + "-" + month + "-" + day;
+        day = date_fin_encheres.getDate();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        month = date_fin_encheres.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        year = date_fin_encheres.getFullYear();
+        date_fin_encheres = year + "-" + month + "-" + day;
 
         $.ajax({
             type: "POST",
@@ -108,8 +133,12 @@
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             error: function (data) {
                 console.log("data", data);
-
-                notifier(data.responseJSON.title, data.responseJSON.message)
+                notifier(data.responseJSON.title, data.responseJSON.message);
+            },
+            success: function (data) {
+                console.log("data", data);
+                window.location = 'accueil';
+                notifier("Succès", "Article mis en vente");
             }
         });
     }
