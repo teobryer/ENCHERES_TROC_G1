@@ -58,6 +58,9 @@ public class Articles_VendusDAOImpl extends MaConnexion implements DAO<Articles_
                 }
                 articles_Vendus.setCategorie(DAOFact.getCategoriesDAO().selectById(no_categorie));
             }
+
+            if (articles_Vendus == null)
+                throw new DALException("Il n'y a pas d'article avec cet id");
             cnx.close();
 
         } catch (Exception e) {
