@@ -66,7 +66,14 @@
     function ajouterArticle(article){
 
        // ,,article["date_debut_encheres"],article["date_fin_encheres"],,article["prix_vente"]["nom_article"],article["description"],article["date_debut_encheres"],article["date_fin_encheres"],article["prix_initial"],article["prix_vente"],article["utilisateur"]["pseudo"],article["no_categorie"]
+       let montant;
+        try{
+             montant  = article["enchereMax"]["montant_enchere"]+ 'pts';
+        }
 
+        catch (e){
+            montant  = "Aucune offre";
+        }
         let html = '<div class="col-10 col-sm-5 col-md-4 col-lg-3 col-xl-2 col-xxl-2">'+
             ' <div class="card  p-2 m-1">'+
 
@@ -75,13 +82,13 @@
             ' <p id="description" class="card-text">'+article["description"]+'</p>'+
 
 
-                '<div>Prix initial : '+article["prix_initial"]+'€</div>'+
+                '<div>Prix initial : '+article["prix_initial"]+'</div>'+
 
-               ' <div>Prix actuel : '+article["enchereMax"]["montant_enchere"]+'€</div>'+
+               ' <div>Prix actuel : '+montant+ '</div>'+
 
             ' <a id="lien" href="article/'+article["no_article"]+'" class="btn btn-primary">'+'Enchérir'+'</a>'+
             '</div>'+
-            '</div>'
+            '</div>'+
         '</div>';
         console.log(html);
         $('#gallery').append(html);
