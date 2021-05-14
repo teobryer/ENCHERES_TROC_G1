@@ -148,8 +148,8 @@ dateEvent =  new Date(article["date_fin_encheres"]);
             error: function (data) {
                 console.log("data", data);
 
-                notifier(data.responseJSON.title,data.responseJSON.message)
-                window.location="../oups";
+                notifier2(data.responseJSON.title,data.responseJSON.message,0)
+
             }
         });
     }

@@ -42,7 +42,7 @@ public class ArticleServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/WEB-INF/consultation-article.jsp").forward(req, resp);
         }
         catch (Exception e){
-
+            resp.sendError(404);
         }
 
     }
