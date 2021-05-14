@@ -8,6 +8,7 @@ import app.bo.Utilisateurs;
 import app.dal.DALException;
 import app.dal.DAOFact;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class EnchereManager implements IEncheresManager {
         try{
 
              user =  DAOFact.getUtilisateursDAO().selectById(no_utilisateur);
+
+
             if(user.getCredit()-montant_enchere <0 ){
                 throw new BusinessException("Action impossible", "Vous ne disposez pas assez de credits");
             }
@@ -29,6 +32,8 @@ public class EnchereManager implements IEncheresManager {
             throw new BusinessException("Erreur", "Erreur inconnue");
         }
 
+
+
         Enchere nouvelleEnchere = new Enchere();
         nouvelleEnchere.setDate_enchere(date_enchere);
         nouvelleEnchere.setMontant_enchere(montant_enchere);
@@ -37,6 +42,12 @@ public class EnchereManager implements IEncheresManager {
 
         try {
           Articles_Vendus article =  DAOFact.getArticlesDAO().selectById(no_article); //  récupération de l'article
+
+            if(article.getDate_fin_encheres().isBefore( date_enchere.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate())){
+             throw new BusinessException("Action impossible","Cette enchère est terminée");
+            }
             try {
                 Enchere ancienneEnchereMax = article.getEnchereMax(); // récupération de l'ancienne enchere Max avant cette enchère
                 Utilisateurs utilisateurPrecedenteEnchereMax = DAOFact.getUtilisateursDAO().selectById(ancienneEnchereMax.getNo_utilisateur()); //récupération de l'utilisateur de la précédente meilleure offre
@@ -54,7 +65,7 @@ public class EnchereManager implements IEncheresManager {
             DAOFact.getUtilisateursDAO().update(user);
             return  e;
         } catch (Exception e) {
-            throw new BusinessException("BLL insererNouvelleEnchere");
+            throw new BusinessException("Erreur", "L'enchère n'a pas pu être envoyée");
         }
     }
 

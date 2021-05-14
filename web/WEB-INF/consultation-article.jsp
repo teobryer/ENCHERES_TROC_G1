@@ -70,9 +70,9 @@
                     <h5 class="price">Vendeur : <span id="vendeur">jojo44</span></h5>
 
                     <c:if test="${sessionScope.connectedUser != null}">
-                        <h5 class="price">Proposition : <span>  <input type="number" class="form-label" id="proposition" min="0" required></span></h5>
+                        <h5 id="prop" class="price">Proposition : <span>  <input type="number" class="form-label" id="proposition" min="0" required></span></h5>
                         <div class="action">
-                            <button onclick="encherir()" class="add-to-cart btn btn-default" type="button">Enchérir</button>
+                            <button id="encherir" onclick="encherir()" class="add-to-cart btn btn-default" type="button">Enchérir</button>
 
                         </div>
                     </c:if>
@@ -126,8 +126,11 @@ var articleCourrant = null;
         $("#retrait").text(article["retrait"]["rue"]+", "+ article["retrait"]["code_postal"]+", "+ article["retrait"]["ville"]);
         $("#vendeur").text( article["utilisateur"]["pseudo"]);
 
-
-dateEvent =  new Date(article["date_fin_encheres"]);
+var year = articleCourrant["date_fin_encheres"]["year"];
+var month = articleCourrant["date_fin_encheres"]["monthValue"] - 1 ;
+var day = articleCourrant["date_fin_encheres"]["dayOfMonth"];
+console.log("Date du jour " + day +' '+ month + " "  +day );
+dateEvent =  new Date(year,month,day );
         compte_a_rebours();
 
     }
@@ -140,7 +143,7 @@ dateEvent =  new Date(article["date_fin_encheres"]);
                 articleCourrant = article;
               //  notifier("Succès","Récupération des données");
                 afficherArticle(article);
-
+                compte_a_rebours();
 
 
 
@@ -164,8 +167,12 @@ function compte_a_rebours()
     var total_secondes = (date_evenement - date_actuelle) / 1000;
 
     var prefixe = "Se termine dans ";
+    $("#encherir").css("display","visible");
+    $("#prop").css("display","visible");
     if (total_secondes < 0)
     {
+        $("#encherir").css("display","none");
+        $("#prop").css("display","none");
         prefixe = "Terminé il y a "; // On modifie le préfixe si la différence est négatif
         total_secondes = Math.abs(total_secondes); // On ne garde que la valeur absolue
     }
