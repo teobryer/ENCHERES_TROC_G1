@@ -2,7 +2,9 @@ package app.bll;
 
 
 
+import app.bo.Articles_Vendus;
 import app.bo.Enchere;
+import app.bo.Utilisateurs;
 import app.dal.DALException;
 import app.dal.DAOFact;
 
@@ -14,6 +16,19 @@ public class EnchereManager implements IEncheresManager {
     @Override
     public Enchere insererNouvelleEnchere(Date date_enchere, int montant_enchere,
                                           int no_article, int no_utilisateur) throws BusinessException {
+        Utilisateurs user;
+        try{
+
+             user =  DAOFact.getUtilisateursDAO().selectById(no_utilisateur);
+            if(user.getCredit()-montant_enchere <0 ){
+                throw new BusinessException("Action impossible", "Vous ne disposez pas assez de credits");
+            }
+
+        }
+        catch (Exception e){
+            throw new BusinessException("Erreur", "Erreur inconnue");
+        }
+
         Enchere nouvelleEnchere = new Enchere();
         nouvelleEnchere.setDate_enchere(date_enchere);
         nouvelleEnchere.setMontant_enchere(montant_enchere);
@@ -21,7 +36,23 @@ public class EnchereManager implements IEncheresManager {
         nouvelleEnchere.setNo_utilisateur(no_utilisateur);
 
         try {
-            return DAOFact.getEncheresDAO().insert(nouvelleEnchere);
+          Articles_Vendus article =  DAOFact.getArticlesDAO().selectById(no_article); //  récupération de l'article
+            try {
+                Enchere ancienneEnchereMax = article.getEnchereMax(); // récupération de l'ancienne enchere Max avant cette enchère
+                Utilisateurs utilisateurPrecedenteEnchereMax = DAOFact.getUtilisateursDAO().selectById(ancienneEnchereMax.getNo_utilisateur()); //récupération de l'utilisateur de la précédente meilleure offre
+                utilisateurPrecedenteEnchereMax.setCredit(utilisateurPrecedenteEnchereMax.getCredit() + ancienneEnchereMax.getMontant_enchere()); // recreditation des points de l'enchère
+                DAOFact.getUtilisateursDAO().update(utilisateurPrecedenteEnchereMax); // mise à jour de l'utilisateur
+
+            }
+            catch (Exception e){
+
+            }
+            Enchere e  = DAOFact.getEncheresDAO().insert(nouvelleEnchere); // Insertion de la nouvelle enchère
+            user =  DAOFact.getUtilisateursDAO().selectById(no_utilisateur);
+            int newcredit = user.getCredit() -montant_enchere;
+            user.setCredit(newcredit);
+            DAOFact.getUtilisateursDAO().update(user);
+            return  e;
         } catch (Exception e) {
             throw new BusinessException("BLL insererNouvelleEnchere");
         }

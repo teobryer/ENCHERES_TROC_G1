@@ -40,7 +40,7 @@ public class Articles_VendusManager implements IArticles_VendusManager {
         }
 
         catch (Exception e){
-            throw new BusinessException("Articles non récupéré", "Problème dans le récupération de l'article"+id);
+            throw new BusinessException("Article non récupéré", "Problème dans le récupération de l'article"+id);
         }
     }
 }

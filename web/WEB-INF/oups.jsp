@@ -11,7 +11,7 @@
 <head>
     <title>Oups</title>
     <jsp:include page="bootstrap_fragment.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value="/css/error.css" />">
+   <link rel="stylesheet" href="<c:url value="/css/error.css" />">
 
 </head>
 <body>
@@ -19,11 +19,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 
 <p class="center">Space Invadors destroyed this page! Take revenge on them!
-    <br/> Use <span class="label label-danger">Space</span> to shoot and <span class="label label-danger">←</span>&#160;<span
-            class="label label-danger">→</span> to move!&#160;&#160;&#160;<button class="btn btn-default btn-xs"
-                                                                                  id="restart">Restart
-    </button>
-</p>
+    <br/> Use <span class="label label-danger">Space</span> to shoot and <span class="label label-danger">←</span>&#160;<span class="label label-danger">→</span> to move!&#160;&#160;&#160;<button class="btn btn-default btn-xs" id="restart">Restart</button></p>
 
 <canvas id="space-invaders"/>
 
@@ -31,7 +27,7 @@
 
 
 <script>
-    ;(function () {
+    ;(function() {
         "use strict";
 
         // General
@@ -68,7 +64,7 @@
 
         // Game Controller
         // ---------------
-        var Game = function () {
+        var Game = function() {
 
             this.level = -1;
             this.lost = false;
@@ -78,16 +74,15 @@
             this.invaderShots = [];
 
             if (invaderDownTimer === undefined) {
-                invaderDownTimer = setInterval(function () {
+                invaderDownTimer = setInterval(function() {
                     for (i = 0; i < game.invaders.length; i++) game.invaders[i].move();
                 }, 1000 - (this.level * 1.8));
 
-            }
-            ;
+            };
         }
 
         Game.prototype = {
-            update: function () {
+            update: function() {
 
                 // Next level
                 if (game.invaders.length === 0) {
@@ -108,8 +103,8 @@
                 if (!this.lost) {
 
                     // Collision
-                    game.player.projectile.forEach(function (projectile) {
-                        game.invaders.forEach(function (invader) {
+                    game.player.projectile.forEach(function(projectile) {
+                        game.invaders.forEach(function(invader) {
                             if (collides(projectile, invader)) {
                                 invader.destroy();
                                 projectile.active = false;
@@ -117,7 +112,7 @@
                         });
                     });
 
-                    this.invaderShots.forEach(function (invaderShots) {
+                    this.invaderShots.forEach(function(invaderShots) {
                         if (collides(invaderShots, game.player)) {
                             game.player.destroy();
                         }
@@ -131,13 +126,13 @@
                 game.player.update();
                 for (i = 0; i < game.invaderShots.length; i++) game.invaderShots[i].update();
 
-                this.invaders = game.invaders.filter(function (invader) {
+                this.invaders = game.invaders.filter(function(invader) {
                     return invader.active;
                 });
 
             },
 
-            draw: function () {
+            draw: function() {
 
                 if (this.lost) {
                     screen.fillStyle = "rgba(0, 0, 0, 0.03)";
@@ -170,8 +165,8 @@
 
             },
 
-            invadersBelow: function (invader) {
-                return this.invaders.filter(function (b) {
+            invadersBelow: function(invader) {
+                return this.invaders.filter(function(b) {
                     return Math.abs(invader.coordinates.x - b.coordinates.x) === 0 &&
                         b.coordinates.y > invader.coordinates.y;
                 }).length > 0;
@@ -181,7 +176,7 @@
 
         // Invaders
         // --------
-        var Invader = function (coordinates) {
+        var Invader = function(coordinates) {
             this.active = true;
             this.coordinates = coordinates;
             this.size = {
@@ -195,7 +190,7 @@
         };
 
         Invader.prototype = {
-            update: function () {
+            update: function() {
 
                 if (Math.random() > invaderAttackRate && !game.invadersBelow(this)) {
                     var projectile = new Projectile({
@@ -209,11 +204,11 @@
                 }
 
             },
-            draw: function () {
+            draw: function() {
                 if (this.active) screen.drawImage(invaderCanvas, this.coordinates.x, this.coordinates.y);
 
             },
-            move: function () {
+            move: function() {
                 if (this.patrolX < 0 || this.patrolX > 100) {
                     this.speedX = -this.speedX;
                     this.patrolX += this.speedX;
@@ -227,7 +222,7 @@
                 }
 
             },
-            destroy: function () {
+            destroy: function() {
                 this.active = false;
                 kills += 1;
 
@@ -237,7 +232,7 @@
 
         // Player
         // ------
-        var Player = function () {
+        var Player = function() {
             this.active = true;
             this.size = {
                 width: 16,
@@ -254,11 +249,11 @@
         };
 
         Player.prototype = {
-            update: function () {
+            update: function() {
 
                 for (var i = 0; i < this.projectile.length; i++) this.projectile[i].update();
 
-                this.projectile = this.projectile.filter(function (projectile) {
+                this.projectile = this.projectile.filter(function(projectile) {
                     return projectile.active;
                 });
 
@@ -284,7 +279,7 @@
                 }
 
             },
-            draw: function () {
+            draw: function() {
                 if (this.active) {
                     screen.rect(this.coordinates.x, this.coordinates.y, this.size.width, this.size.height);
                     screen.rect(this.coordinates.x - 2, this.coordinates.y + 2, 20, 6);
@@ -294,7 +289,7 @@
                 for (var i = 0; i < this.projectile.length; i++) this.projectile[i].draw();
 
             },
-            destroy: function () {
+            destroy: function() {
                 this.active = false;
                 game.lost = true;
             }
@@ -302,7 +297,7 @@
 
         // Projectile
         // ------
-        var Projectile = function (coordinates, velocity) {
+        var Projectile = function(coordinates, velocity) {
             this.active = true;
             this.coordinates = coordinates;
             this.size = {
@@ -313,14 +308,14 @@
         };
 
         Projectile.prototype = {
-            update: function () {
+            update: function() {
                 this.coordinates.x += this.velocity.x;
                 this.coordinates.y += this.velocity.y;
 
                 if (this.coordinates.y > gameSize.height || this.coordinates.y < 0) this.active = false;
 
             },
-            draw: function () {
+            draw: function() {
                 if (this.active) screen.rect(this.coordinates.x, this.coordinates.y, this.size.width, this.size.height);
 
             }
@@ -328,7 +323,7 @@
 
         // Keyboard input tracking
         // -----------------------
-        var KeyController = function () {
+        var KeyController = function() {
             this.KEYS = {
                 LEFT: 37,
                 RIGHT: 39,
@@ -338,7 +333,7 @@
             var keyState = {};
 
             var counter;
-            window.addEventListener('keydown', function (e) {
+            window.addEventListener('keydown', function(e) {
                 for (counter = 0; counter < keyCode.length; counter++)
                     if (keyCode[counter] == e.keyCode) {
                         keyState[e.keyCode] = true;
@@ -347,7 +342,7 @@
 
             });
 
-            window.addEventListener('keyup', function (e) {
+            window.addEventListener('keyup', function(e) {
                 for (counter = 0; counter < keyCode.length; counter++)
                     if (keyCode[counter] == e.keyCode) {
                         keyState[e.keyCode] = false;
@@ -355,7 +350,7 @@
                     }
             });
 
-            this.isDown = function (keyCode) {
+            this.isDown = function(keyCode) {
                 return keyState[keyCode] === true;
             };
 
@@ -403,10 +398,10 @@
 
         // Start game
         // ----------
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function() {
 
             var invaderAsset = new Image;
-            invaderAsset.onload = function () {
+            invaderAsset.onload = function() {
 
                 invaderCanvas = document.createElement('canvas');
                 invaderCanvas.width = invaderSize;
@@ -425,10 +420,10 @@
 
         });
 
-        window.addEventListener('resize', function () {
+        window.addEventListener('resize', function() {
             initGameStart();
         });
-        document.getElementById('restart').addEventListener('click', function () {
+        document.getElementById('restart').addEventListener('click', function() {
             initGameStart();
         });
 

@@ -63,23 +63,23 @@
 
 
 <script>
-    function ajouterArticle(nom, description, debut, fin, prixInit, prixFin, nomUser, nomCategorie){
+    function ajouterArticle(article){
 
-
+       // ,,article["date_debut_encheres"],article["date_fin_encheres"],,article["prix_vente"]["nom_article"],article["description"],article["date_debut_encheres"],article["date_fin_encheres"],article["prix_initial"],article["prix_vente"],article["utilisateur"]["pseudo"],article["no_categorie"]
 
         let html = '<div class="col-10 col-sm-5 col-md-4 col-lg-3 col-xl-2 col-xxl-2">'+
             ' <div class="card  p-2 m-1">'+
 
             ' <div class="card-body">'+
-            ' <h5 id="nom" class="card-title">'+nom+'</h5>'+
-            ' <p id="description" class="card-text">'+description+'</p>'+
+            ' <h5 id="nom" class="card-title">'+article["nom_article"]+'</h5>'+
+            ' <p id="description" class="card-text">'+article["description"]+'</p>'+
 
 
-                '<div>Prix initial : '+prixInit+'€</div>'+
+                '<div>Prix initial : '+article["prix_initial"]+'€</div>'+
 
-               ' <div>Prix actuel : '+prixFin+'€</div>'+
+               ' <div>Prix actuel : '+article["enchereMax"]["montant_enchere"]+'€</div>'+
 
-            ' <a id="lien" href="#" class="btn btn-primary">'+'Enchérir'+'</a>'+
+            ' <a id="lien" href="article/'+article["no_article"]+'" class="btn btn-primary">'+'Enchérir'+'</a>'+
             '</div>'+
             '</div>'
         '</div>';
@@ -96,7 +96,7 @@
                 console.log(data);
                 $.each(data, (cpt, article) => {
                     console.log(article);
-                    ajouterArticle(article["nom_article"],article["description"],article["date_debut_encheres"],article["date_fin_encheres"],article["prix_initial"],article["prix_vente"],article["utilisateur"]["pseudo"],article["no_categorie"]);
+                    ajouterArticle(article);
                 });
                 notifier("Succès","Récupération des données");
             },
