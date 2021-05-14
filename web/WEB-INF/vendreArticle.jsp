@@ -45,7 +45,7 @@
             <label class="form-label" for="date_debut_encheres">Début de la vente</label>
         </div>
         <div>
-            <input type="date" class="form-label" id="date_fin_encheres" required>
+            <input type="date" class="form-label" id="date_fin_encheres" min="" required>
             <label class="form-label" for="date_fin_encheres">Fin de la vente</label>
         </div>
     </div>
@@ -68,11 +68,26 @@
     </div>
 
     <button type="submit" id="creer" class="btn btn-primary">Enregistrer</button>
-    <button type="button" class="btn btn-secondary" onclick="form.action='AccueilServlet'">Annuler</button>
+    <a href="accueil"><button type="button" class="btn btn-secondary">Annuler</button></a>
 </form>
 
 <jsp:include page="footer.jsp"></jsp:include>
 <script type="text/javascript">
+    // Set l'adresse du vendeur par défaut pour l'adresse de retrait
+    document.getElementById("rue").value = '${sessionScope.connectedUser.rue}';
+    document.getElementById("code_postal").value = '${sessionScope.connectedUser.code_postal}';
+    document.getElementById("ville").value = '${sessionScope.connectedUser.ville}';
+    // Set le minimum de la date de début d'enchères à aujourd'hui - et celle de fin d'enchères à date de début d'enchères
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("date_debut_encheres").setAttribute('min', today);
+    console.log("today", today);
+    document.getElementById("date_debut_encheres").addEventListener("change", function() {
+        let input = this.value;
+        let dateEntered = new Date(input);
+        dateEntered.setDate(dateEntered.getDate() + 1);
+        document.getElementById("date_fin_encheres").setAttribute('min', dateEntered.toISOString().split('T')[0]);
+    });
+
     function ajouterArticle() {
         let nom_article = $("#nom_article").val();
         let description = $("#description").val();
@@ -132,7 +147,6 @@
             },
             success: function (data) {
                 console.log("data", data);
-                window.location = 'accueil';
                 notifier("Succès", "Article mis en vente");
             }
         });
@@ -149,16 +163,15 @@
                         text: categorie['libelle']
                     }));
                 });
-                notifier("Succès", "Récupération des catégories");
-
             },
             error: function (data) {
                 console.log("data", data);
-
                 notifier(data.responseJSON.title, data.responseJSON.message)
             }
         });
     }
+
+    recupererCategories();
 </script>
 </body>
 </html>

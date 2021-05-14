@@ -27,10 +27,10 @@
         <li class="my-1">Pseudo: ${sessionScope.connectedUser.pseudo}</li>
         <li class="my-1">Nom: ${sessionScope.connectedUser.nom}</li>
         <li class="my-1">Prénom: ${sessionScope.connectedUser.prenom}</li>
-        <li class="my-1>Email: ${sessionScope.connectedUser.email}</li>
-        <li class="my-1>Téléphone: ${sessionScope.connectedUser.telephone}</li>
-        <li class="my-1>Rue: ${sessionScope.connectedUser.rue}</li>
-        <li class="my-1>Code Postal: ${sessionScope.connectedUser.code_postal}</li>
+        <li class="my-1">Email: ${sessionScope.connectedUser.email}</li>
+        <li class="my-1">Téléphone: ${sessionScope.connectedUser.telephone}</li>
+        <li class="my-1">Rue: ${sessionScope.connectedUser.rue}</li>
+        <li class="my-1">Code Postal: ${sessionScope.connectedUser.code_postal}</li>
         <li class="my-1">Ville: ${sessionScope.connectedUser.ville}</li>
     </ul>
     <a href="profil" class="btn btn-success">Modifier</a>
