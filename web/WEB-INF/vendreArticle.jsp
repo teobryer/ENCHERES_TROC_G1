@@ -16,7 +16,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 <jsp:include page="error_fragment.jsp"></jsp:include>
 
-<form onsubmit="ajouterArticle()">
+<form onsubmit="event.preventDefault()">
     <div class="col">
         <input type="hidden" id="no_utilisateur">
         <div>
@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <button type="submit" id="creer" class="btn btn-primary">Enregistrer</button>
+    <button type="submit" id="creer" class="btn btn-primary" onclick="ajouterArticle()">Enregistrer</button>
     <a href="accueil"><button type="button" class="btn btn-secondary">Annuler</button></a>
 </form>
 
@@ -77,6 +77,7 @@
     document.getElementById("rue").value = '${sessionScope.connectedUser.rue}';
     document.getElementById("code_postal").value = '${sessionScope.connectedUser.code_postal}';
     document.getElementById("ville").value = '${sessionScope.connectedUser.ville}';
+
     // Set le minimum de la date de début d'enchères à aujourd'hui - et celle de fin d'enchères à date de début d'enchères
     const today = new Date().toISOString().split('T')[0];
     document.getElementById("date_debut_encheres").setAttribute('min', today);
@@ -92,14 +93,14 @@
         let nom_article = $("#nom_article").val();
         let description = $("#description").val();
         let date_debut_encheres = new Date($("#date_debut_encheres").val());
-        let date_fin_encheres = new Date($("#date_fin_encheres").val())
+        let date_fin_encheres = new Date($("#date_fin_encheres").val());
         let prix_initial = $("#prix_initial").val();
         let no_categorie = $("#no_categorie").val();
         let code_postal = $("#code_postal").val();
         let rue = $("#rue").val();
         let ville = $("#ville").val();
 
-        // Récupération en session d l'utilisateur
+        // Récupération en session de l'utilisateur
         let no_utilisateur = '${sessionScope.connectedUser.no_utilisateur}';
         // Concaténation des jours mois et années pour les transformer en date
         let day, month, year;
@@ -148,6 +149,7 @@
             success: function (data) {
                 console.log("data", data);
                 notifier("Succès", "Article mis en vente");
+                window.location = 'accueil';
             }
         });
     }
